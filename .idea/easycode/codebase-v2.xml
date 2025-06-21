@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/src/Jugadores/Jugador.java;C:/Users/marti/OneDrive/2- Programación/Proyecto2/src/Jugadores/JugadorFactory.java;C:/Users/marti/OneDrive/2- Programación/Proyecto2/src/Jugadores/JugadorHumano.java;C:/Users/marti/OneDrive/2- Programación/Proyecto2/src/Jugadores/PCDificil.java;C:/Users/marti/OneDrive/2- Programación/Proyecto2/src/Jugadores/PCFacil.java;C:/Users/marti/OneDrive/2- Programación/Proyecto2/src/Tablero/GrupoTableros.java;C:/Users/marti/OneDrive/2- Programación/Proyecto2/src/Tablero/Tablero.java;C:/Users/marti/OneDrive/2- Programación/Proyecto2/src/Tablero/TableroIndividual.java;C:/Users/marti/OneDrive/2- Programación/Proyecto2/src/Juego.java;C:/Users/marti/OneDrive/2- Programación/Proyecto2/src/Main.java;C:/Users/marti/OneDrive/2- Programación/Proyecto2/src/Menu.java;C:/Users/marti/OneDrive/2- Programación/Proyecto2/src/Observador.java;C:/Users/marti/OneDrive/2- Programación/Proyecto2/src/Serializacion.java" />
+  </component>
+</project>
