@@ -1,0 +1,40 @@
+Index: src/Juego.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Juego.java b/src/Juego.java
+--- a/src/Juego.java	
++++ b/src/Juego.java	(date 1750539336911)
+@@ -177,7 +177,6 @@
+                     int columnaMeta = (plano - 1) % 3;
+                     if (!planosCompletados.contains(plano - 1)) {
+                         System.out.println("-------------Plano completado: " + plano);
+-                        System.out.println("ENTREEEEEEEEEEEE");
+ 
+                         planosCompletados.add(plano - 1);
+                     }
+@@ -189,7 +188,6 @@
+                     tableros.rellenarTablero('-', plano - 1);
+                     if (!planosCompletados.contains(plano - 1)) {
+                         System.out.println("-------------Plano completado: " + plano);
+-                        System.out.println("ENTREEEEEEEEEEEE");
+ 
+                         planosCompletados.add(plano - 1);
+                     }
+@@ -210,7 +208,6 @@
+                 }
+                 tableros.imprimirTablero();
+                 siguientePlano = posicion; // Guardar la posición elegida (1-9)
+-                System.out.println("Planos Completados: " + planosCompletados);
+             } else {
+                 boolean pedirPlano = planosCompletados.contains(siguientePlano -1);
+                 if (pedirPlano) {
+@@ -283,7 +280,6 @@
+                 }
+                 tableros.imprimirTablero();
+                 siguientePlano = posicion;
+-                System.out.println("Planos Completados: " + planosCompletados);
+             }
+             // Alternar turno
+             turnoJ1 = !turnoJ1;

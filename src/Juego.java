@@ -135,14 +135,14 @@ public class Juego implements Observador {
         while (true) {
             if (turnoJ1) {
                 // Determinar si el siguiente plano está completado o es el primer turno
-                boolean pedirPlano = (turno == 0) || planosCompletados.contains(siguientePlano);
+                boolean pedirPlano = (turno == 0) || planosCompletados.contains(siguientePlano -1);
                 if (pedirPlano) {
                     System.out.println("Turno de '" + jugador1.getNombreJugador() + "'. Escoja plano (1-9) y posición (1-9):");
                     String input = in.nextLine();
                     String[] partes = input.split(" ");
                     plano = Integer.parseInt(partes[0]);
                     posicion = Integer.parseInt(partes[1]);
-                    if (planosCompletados.contains(plano)) {
+                    if (planosCompletados.contains(plano - 1)) {
                         System.out.println("Ese plano ya está completado. Elija otro plano.");
                         continue;
                     }
@@ -150,13 +150,13 @@ public class Juego implements Observador {
                 } else {
                     int planoActual = (siguientePlano == 1) ? 1 : siguientePlano;
                     // Verificar si el plano actual ya está completado
-                    if (planosCompletados.contains(planoActual)) {
+                    if (planosCompletados.contains(planoActual - 1)) {
                         System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
                         String input = in.nextLine();
                         String[] partes = input.split(" ");
                         plano = Integer.parseInt(partes[0]);
                         posicion = Integer.parseInt(partes[1]);
-                        if (planosCompletados.contains(plano)) {
+                        if (planosCompletados.contains(plano - 1)) {
                             System.out.println("Ese plano también está completado. Elija otro.");
                             continue;
                         }
@@ -170,39 +170,37 @@ public class Juego implements Observador {
                     }
                 }
                 // Verificar ganador y empate después de la jugada
-                if (tableros.verificarGanador(plano, jugador1.getSimbolo())) {
+                if (tableros.verificarGanador(plano - 1, jugador1.getSimbolo())) {
                     System.out.println("Tablero Ganado");
-                    tableros.rellenarTablero(jugador1.getSimbolo(), plano);
+                    tableros.rellenarTablero(jugador1.getSimbolo(), plano - 1);
                     int filaMeta = (plano - 1) / 3;
                     int columnaMeta = (plano - 1) % 3;
-                    if (!planosCompletados.contains(plano)) {
+                    if (!planosCompletados.contains(plano - 1)) {
                         System.out.println("-------------Plano completado: " + plano);
-                        System.out.println("ENTREEEEEEEEEEEE???????????????????");
 
-                        planosCompletados.add(plano);
+                        planosCompletados.add(plano - 1);
                     }
                     metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador1.getSimbolo());
                     System.out.println("Vista General del Meta - Tablero.Tablero:");
                     metaTablero.imprimirTablero();
-                } else if (tableros.verificarEmpate(plano)) {
+                } else if (tableros.verificarEmpate(plano - 1)) {
                     System.out.println("Tablero Empatado");
-                    tableros.rellenarTablero('-', plano);
-                    if (!planosCompletados.contains(plano)) {
+                    tableros.rellenarTablero('-', plano - 1);
+                    if (!planosCompletados.contains(plano - 1)) {
                         System.out.println("-------------Plano completado: " + plano);
-                        System.out.println("ENTREEEEEEEEEEEE");
 
-                        planosCompletados.add(plano);
+                        planosCompletados.add(plano - 1);
                     }
-                    metaTablero.rellenarTablero(jugador1.getSimbolo(), plano);
+                    metaTablero.rellenarTablero(jugador1.getSimbolo(), plano - 1);
                     System.out.println("Vista General del Meta - Tablero.Tablero:");
                     metaTablero.imprimirTablero();
                 }
-                if (metaTablero.verificarGanador(plano, jugador1.getSimbolo())) {
+                if (metaTablero.verificarGanador(plano - 1, jugador1.getSimbolo())) {
                     System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
                     actualizar(jugador1, "ganado");
                     actualizar(jugador2, "perdido");
                     return; // Terminar el juego
-                } else if (metaTablero.verificarEmpate(plano)) {
+                } else if (metaTablero.verificarEmpate(plano - 1)) {
                     System.out.println("El juego ha terminado en empate.");
                     actualizar(jugador1, "empate");
                     actualizar(jugador2, "empate");
@@ -210,29 +208,28 @@ public class Juego implements Observador {
                 }
                 tableros.imprimirTablero();
                 siguientePlano = posicion; // Guardar la posición elegida (1-9)
-                System.out.println("Planos Completados: " + planosCompletados);
             } else {
-                boolean pedirPlano = planosCompletados.contains(siguientePlano);
+                boolean pedirPlano = planosCompletados.contains(siguientePlano -1);
                 if (pedirPlano) {
                     System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Escoja plano (1-9) y posición (1-9):");
                     String input = in.nextLine();
                     String[] partes = input.split(" ");
                     plano = Integer.parseInt(partes[0]);
                     posicion = Integer.parseInt(partes[1]);
-                    if (planosCompletados.contains(plano)) {
+                    if (planosCompletados.contains(plano - 1)) {
                         System.out.println("Ese plano ya está completado. Elija otro plano.");
                         continue;
                     }
                     resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
                 } else {
                     int planoActual = (siguientePlano == 1) ? 1 : siguientePlano;
-                    if (planosCompletados.contains(planoActual)) {
+                    if (planosCompletados.contains(planoActual - 1)) {
                         System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
                         String input = in.nextLine();
                         String[] partes = input.split(" ");
                         plano = Integer.parseInt(partes[0]);
                         posicion = Integer.parseInt(partes[1]);
-                        if (planosCompletados.contains(plano)) {
+                        if (planosCompletados.contains(plano - 1)) {
                             System.out.println("Ese plano también está completado. Elija otro.");
                             continue;
                         }
@@ -246,36 +243,36 @@ public class Juego implements Observador {
                     }
                 }
                 // Verificar ganador y empate después de la jugada
-                if (tableros.verificarGanador(plano, jugador2.getSimbolo())) {
+                if (tableros.verificarGanador(plano - 1, jugador2.getSimbolo())) {
                     System.out.println("Tablero Ganado");
-                    tableros.rellenarTablero(jugador2.getSimbolo(), plano);
+                    tableros.rellenarTablero(jugador2.getSimbolo(), plano - 1);
                     int filaMeta = (plano - 1) / 3;
                     int columnaMeta = (plano - 1) % 3;
-                    if (!planosCompletados.contains(plano)) {
+                    if (!planosCompletados.contains(plano - 1)) {
                         System.out.println("-------------Plano completado: " + plano);
                         System.out.println("-------------ENTRE AL PLANO------------- ");
-                        planosCompletados.add(plano);
+                        planosCompletados.add(plano -1);
                     }
                     metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador2.getSimbolo());
                     System.out.println("Vista General del Meta - Tablero.Tablero:");
                     metaTablero.imprimirTablero();
-                } else if (tableros.verificarEmpate(plano)) {
+                } else if (tableros.verificarEmpate(plano - 1)) {
                     System.out.println("Tablero Empatado");
-                    tableros.rellenarTablero('-', plano);
-                    if (!planosCompletados.contains(plano)) {
+                    tableros.rellenarTablero('-', plano - 1);
+                    if (!planosCompletados.contains(plano - 1)) {
                         System.out.println("-------------Plano completado: " + plano);
-                        planosCompletados.add(plano);
+                        planosCompletados.add(plano -1);
                     }
-                    metaTablero.rellenarTablero(jugador1.getSimbolo(), plano);
+                    metaTablero.rellenarTablero(jugador1.getSimbolo(), plano - 1);
                     System.out.println("Vista General del Meta - Tablero.Tablero:");
                     metaTablero.imprimirTablero();
                 }
-                if (metaTablero.verificarGanador(plano, jugador1.getSimbolo())) {
+                if (metaTablero.verificarGanador(plano - 1, jugador1.getSimbolo())) {
                     System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
                     actualizar(jugador1, "ganado");
                     actualizar(jugador2, "perdido");
                     return; // Terminar el juego
-                } else if (metaTablero.verificarEmpate(plano)) {
+                } else if (metaTablero.verificarEmpate(plano - 1)) {
                     System.out.println("El juego ha terminado en empate.");
                     actualizar(jugador1, "empate");
                     actualizar(jugador2, "empate");
@@ -283,7 +280,6 @@ public class Juego implements Observador {
                 }
                 tableros.imprimirTablero();
                 siguientePlano = posicion;
-                System.out.println("Planos Completados: " + planosCompletados);
             }
             // Alternar turno
             turnoJ1 = !turnoJ1;
