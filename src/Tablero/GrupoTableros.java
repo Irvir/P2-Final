@@ -68,7 +68,6 @@ public class GrupoTableros implements Tablero {
     public boolean verificarEmpate(int posicion) {
         Tablero individual = (TableroIndividual) tableros.get(posicion);
         if (individual.verificarEmpate(posicion)){
-            System.out.println("TableroEmpatado");
             return true;
 
         }

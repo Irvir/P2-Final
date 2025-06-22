@@ -54,7 +54,7 @@ public class TableroIndividual implements Tablero {
             return 1; // Retornar 1 para indicar jugada exitosa
         } else {
 
-            System.out.println("Posición ya ocupada, intenta otra vez.");
+            System.out.println("Posición ya ocupada: " + (fila* 3 +columna+1)+" intenta otra vez.");
             return -1;
         }
     }
@@ -87,16 +87,36 @@ public class TableroIndividual implements Tablero {
     }
     @Override
     public boolean verificarEmpate(int posicionTablero) {
+        // Si hay un ganador, no es empate
+        if (verificarGanador(posicionTablero, 'X') || verificarGanador(posicionTablero, 'O')) {
+            return false;
+        }
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (tablero[i][j] == '-') {
-                    return false; // Si hay al menos una celda vacía, no es empate
+                    return false;
                 }
             }
         }
         return true;
     }
-
+    // Metodo para verificar empate global en el meta-tablero
+    public boolean empateGlobal(TableroIndividual metaTablero) {
+        // Si hay un ganador, no es empate
+        if (metaTablero.verificarGanador(0, 'X') || metaTablero.verificarGanador(0, 'O')) {
+            return false;
+        }
+        char[][] tablero = metaTablero.getTablero();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (tablero[i][j] == '-' || tablero[i][j] == '/') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public char[][] getTablero() {
         return tablero;
