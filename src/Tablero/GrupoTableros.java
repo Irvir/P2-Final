@@ -55,7 +55,6 @@ public class GrupoTableros implements Tablero {
     public boolean verificarGanador(int posicionTablero,char simbolo) {
         Tablero individual = (TableroIndividual) tableros.get(posicionTablero);
         if(individual.verificarGanador(posicionTablero,simbolo)) {
-            System.out.println("TableroGanado");
             return true;
         }
         return false; // Placeholder

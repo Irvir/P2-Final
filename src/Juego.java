@@ -27,11 +27,8 @@ public class Juego implements Observador {
         switch (tipo){
             case "ganado":
                 jugador.setPartidasGanadas(jugador.getPartidasGanadas() + 1);
-
-
                 break;
             case "perdido":
-
                 jugador.setPartidasPerdidas(jugador.getPartidasPerdidas() + 1);
                 break;
             case "empate":
@@ -178,13 +175,11 @@ public class Juego implements Observador {
                             }
                             // Verificar ganador y empate después de la jugada
                             if (tableros.verificarGanador(plano - 1, jugador1.getSimbolo())) {
-                                System.out.println("Tablero Ganado");
+                                System.out.println("! Tablero Ganado !");
                                 tableros.rellenarTablero(jugador1.getSimbolo(), plano - 1);
                                 int filaMeta = (plano - 1) / 3;
                                 int columnaMeta = (plano - 1) % 3;
                                 if (!planosCompletados.contains(plano - 1)) {
-                                    System.out.println("-------------Plano completado: " + plano);
-
                                     planosCompletados.add(plano - 1);
                                 }
                                 metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador1.getSimbolo());
@@ -194,7 +189,6 @@ public class Juego implements Observador {
                                 System.out.println("Tablero Empatado");
                                 tableros.rellenarTablero('-', plano - 1);
                                 if (!planosCompletados.contains(plano - 1)) {
-                                    System.out.println("-------------Plano completado: " + plano);
 
                                     planosCompletados.add(plano - 1);
                                 }
@@ -202,20 +196,40 @@ public class Juego implements Observador {
                                 System.out.println("Vista General del Meta - Tablero.Tablero:");
                                 metaTablero.imprimirTablero();
                             }
-                            if (metaTablero.verificarGanador(plano - 1, jugador1.getSimbolo())) {
+                            if (metaTablero.verificarGanador(0, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(1, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(2, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(3, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(4, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(5, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(6, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(7, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(8, jugador1.getSimbolo())) {
+                                // Ganó el jugador
                                 System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
                                 actualizar(jugador1, "ganado");
                                 actualizar(jugador2, "perdido");
-                                return; // Terminar el juego
+                                serializacion.actualizarJugador(jugador1);
+                                serializacion.actualizarJugador(jugador2);
+                                System.out.println("Estadísticas actualizadas:");
+                                serializacion.mostrarJugadores();
+                                return;
+
                             } else if (metaTablero.verificarEmpate(plano - 1)) {
                                 System.out.println("El juego ha terminado en empate.");
                                 actualizar(jugador1, "empate");
                                 actualizar(jugador2, "empate");
+                                serializacion.actualizarJugador(jugador1);
+                                serializacion.actualizarJugador(jugador2);
+                                System.out.println("Estadísticas actualizadas:");
+                                serializacion.mostrarJugadores();
                                 return; // Terminar el juego
                             }
                             tableros.imprimirTablero();
                             siguientePlano = posicion; // Guardar la posición elegida (1-9)
-                        } else {
+                        }
+                        //Jugador 2
+                        else {
                             boolean pedirPlano = planosCompletados.contains(siguientePlano - 1);
                             if (pedirPlano) {
                                 System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Escoja plano (1-9) y posición (1-9):");
@@ -251,13 +265,11 @@ public class Juego implements Observador {
                             }
                             // Verificar ganador y empate después de la jugada
                             if (tableros.verificarGanador(plano - 1, jugador2.getSimbolo())) {
-                                System.out.println("Tablero Ganado");
+                                System.out.println("! Tablero Ganado !");
                                 tableros.rellenarTablero(jugador2.getSimbolo(), plano - 1);
                                 int filaMeta = (plano - 1) / 3;
                                 int columnaMeta = (plano - 1) % 3;
                                 if (!planosCompletados.contains(plano - 1)) {
-                                    System.out.println("-------------Plano completado: " + plano);
-                                    System.out.println("-------------ENTRE AL PLANO------------- ");
                                     planosCompletados.add(plano - 1);
                                 }
                                 metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador2.getSimbolo());
@@ -274,15 +286,32 @@ public class Juego implements Observador {
                                 System.out.println("Vista General del Meta - Tablero.Tablero:");
                                 metaTablero.imprimirTablero();
                             }
-                            if (metaTablero.verificarGanador(plano - 1, jugador1.getSimbolo())) {
-                                System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
-                                actualizar(jugador1, "ganado");
-                                actualizar(jugador2, "perdido");
-                                return; // Terminar el juego
+                            if (metaTablero.verificarGanador(0, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(1, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(2, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(3, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(4, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(5, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(6, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(7, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(8, jugador2.getSimbolo())) {
+                                // Ganó el jugador
+                                System.out.println("¡" + jugador2.getNombreJugador() + " ha ganado el juego!");
+                                actualizar(jugador2, "ganado");
+                                actualizar(jugador1, "perdido");
+                                serializacion.actualizarJugador(jugador1);
+                                serializacion.actualizarJugador(jugador2);
+                                System.out.println("Estadísticas actualizadas:");
+                                serializacion.mostrarJugadores();
+                                return;
                             } else if (metaTablero.verificarEmpate(plano - 1)) {
                                 System.out.println("El juego ha terminado en empate.");
                                 actualizar(jugador1, "empate");
                                 actualizar(jugador2, "empate");
+                                serializacion.actualizarJugador(jugador1);
+                                serializacion.actualizarJugador(jugador2);
+                                System.out.println("Estadísticas actualizadas:");
+                                serializacion.mostrarJugadores();
                                 return; // Terminar el juego
                             }
                             tableros.imprimirTablero();
@@ -335,12 +364,11 @@ public class Juego implements Observador {
                             }
                             // Verificar ganador y empate después de la jugada
                             if (tableros.verificarGanador(plano - 1, jugador1.getSimbolo())) {
-                                System.out.println("Tablero Ganado");
+                                System.out.println("! Tablero Ganado !" );
                                 tableros.rellenarTablero(jugador1.getSimbolo(), plano - 1);
                                 int filaMeta = (plano - 1) / 3;
                                 int columnaMeta = (plano - 1) % 3;
                                 if (!planosCompletados.contains(plano - 1)) {
-                                    System.out.println("-------------Plano completado: " + plano);
 
                                     planosCompletados.add(plano - 1);
                                 }
@@ -359,15 +387,32 @@ public class Juego implements Observador {
                                 System.out.println("Vista General del Meta - Tablero.Tablero:");
                                 metaTablero.imprimirTablero();
                             }
-                            if (metaTablero.verificarGanador(plano - 1, jugador1.getSimbolo())) {
+                            if (metaTablero.verificarGanador(0, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(1, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(2, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(3, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(4, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(5, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(6, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(7, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(8, jugador1.getSimbolo())) {
+                                // Ganó el jugador
                                 System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
-                                actualizar(jugador1, "ganado");
-                                actualizar(jugador2, "perdido");
-                                return; // Terminar el juego
+                                actualizar(jugador2, "ganado");
+                                actualizar(jugador1, "perdido");
+                                serializacion.actualizarJugador(jugador1);
+                                serializacion.actualizarJugador(jugador2);
+                                System.out.println("Estadísticas actualizadas:");
+                                serializacion.mostrarJugadores();
+                                return;
                             } else if (metaTablero.verificarEmpate(plano - 1)) {
                                 System.out.println("El juego ha terminado en empate.");
                                 actualizar(jugador1, "empate");
                                 actualizar(jugador2, "empate");
+                                serializacion.actualizarJugador(jugador1);
+                                serializacion.actualizarJugador(jugador2);
+                                System.out.println("Estadísticas actualizadas:");
+                                serializacion.mostrarJugadores();
                                 return; // Terminar el juego
                             }
                             tableros.imprimirTablero();
@@ -408,12 +453,11 @@ public class Juego implements Observador {
                             }
                             // Verificar ganador y empate después de la jugada
                             if (tableros.verificarGanador(plano - 1, jugador2.getSimbolo())) {
-                                System.out.println("Tablero Ganado");
+                                System.out.println("! Tablero Ganado !");
                                 tableros.rellenarTablero(jugador2.getSimbolo(), plano - 1);
                                 int filaMeta = (plano - 1) / 3;
                                 int columnaMeta = (plano - 1) % 3;
                                 if (!planosCompletados.contains(plano - 1)) {
-                                    System.out.println("-------------Plano completado: " + plano);
                                     planosCompletados.add(plano - 1);
                                 }
                                 metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador2.getSimbolo());
@@ -430,17 +474,216 @@ public class Juego implements Observador {
                                 System.out.println("Vista General del Meta - Tablero.Tablero:");
                                 metaTablero.imprimirTablero();
                             }
-                            if (metaTablero.verificarGanador(plano - 1, jugador1.getSimbolo())) {
-                                System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
-                                actualizar(jugador1, "ganado");
-                                actualizar(jugador2, "perdido");
-
-                                return; // Terminar el juego
+                            if (metaTablero.verificarGanador(0, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(1, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(2, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(3, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(4, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(5, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(6, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(7, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(8, jugador2.getSimbolo())) {
+                                // Ganó el jugador
+                                System.out.println("¡" + jugador2.getNombreJugador() + " ha ganado el juego!");
+                                actualizar(jugador2, "ganado");
+                                actualizar(jugador1, "perdido");
+                                serializacion.actualizarJugador(jugador1);
+                                serializacion.actualizarJugador(jugador2);
+                                System.out.println("Estadísticas actualizadas:");
+                                serializacion.mostrarJugadores();
+                                return;
                             } else if (metaTablero.verificarEmpate(plano - 1)) {
                                 System.out.println("El juego ha terminado en empate.");
                                 actualizar(jugador1, "empate");
                                 actualizar(jugador2, "empate");
+                                serializacion.actualizarJugador(jugador1);
+                                serializacion.actualizarJugador(jugador2);
+                                System.out.println("Estadísticas actualizadas:");
+                                serializacion.mostrarJugadores();
+                                return; // Terminar el juego
+                            }
+                            tableros.imprimirTablero();
+                            siguientePlano = posicion;
+                        }
+                        // Alternar turno
+                        turnoJ1 = !turnoJ1;
+                        turno++;
+                    }
 
+                }
+                else{
+                    while (true) {
+                        if (turnoJ1) {
+                            // Determinar si el siguiente plano está completado o es el primer turno
+                            boolean pedirPlano = (turno == 0) || planosCompletados.contains(siguientePlano - 1);
+                            if (pedirPlano) {
+                                System.out.println("Turno de '" + jugador1.getNombreJugador() + "'. Escoja plano (1-9) y posición (1-9):");
+                                String input = in.nextLine();
+                                String[] partes = input.split(" ");
+                                plano = Integer.parseInt(partes[0]);
+                                posicion = Integer.parseInt(partes[1]);
+                                if (planosCompletados.contains(plano - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano.");
+                                    continue;
+                                }
+                                resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
+                            } else {
+                                int planoActual = (siguientePlano == 1) ? 1 : siguientePlano;
+                                // Verificar si el plano actual ya está completado
+                                if (planosCompletados.contains(planoActual - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
+                                    String input = in.nextLine();
+                                    String[] partes = input.split(" ");
+                                    plano = Integer.parseInt(partes[0]);
+                                    posicion = Integer.parseInt(partes[1]);
+                                    if (planosCompletados.contains(plano - 1)) {
+                                        System.out.println("Ese plano también está completado. Elija otro.");
+                                        continue;
+                                    }
+                                    resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
+                                } else {
+                                    System.out.println("Turno de '" + jugador1.getNombreJugador() + "'. posición (1-9) en el tablero: " + planoActual);
+                                    String input = in.nextLine();
+                                    posicion = Integer.parseInt(input);
+                                    resultado = jugador1.hacerJugada(planoActual, posicion, tableros, jugador1.getSimbolo());
+                                    plano = planoActual;
+                                }
+                            }
+                            // Verificar ganador y empate después de la jugada
+                            if (tableros.verificarGanador(plano - 1, jugador1.getSimbolo())) {
+                                System.out.println("! Tablero Ganado !");
+                                tableros.rellenarTablero(jugador1.getSimbolo(), plano - 1);
+                                int filaMeta = (plano - 1) / 3;
+                                int columnaMeta = (plano - 1) % 3;
+                                if (!planosCompletados.contains(plano - 1)) {
+
+                                    planosCompletados.add(plano - 1);
+                                }
+                                metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador1.getSimbolo());
+                                System.out.println("Vista General del Meta - Tablero.Tablero:");
+                                metaTablero.imprimirTablero();
+                            } else if (tableros.verificarEmpate(plano - 1)) {
+                                System.out.println("Tablero Empatado");
+                                tableros.rellenarTablero('-', plano - 1);
+                                if (!planosCompletados.contains(plano - 1)) {
+
+                                    planosCompletados.add(plano - 1);
+                                }
+                                metaTablero.rellenarTablero(jugador1.getSimbolo(), plano - 1);
+                                System.out.println("Vista General del Meta - Tablero.Tablero:");
+                                metaTablero.imprimirTablero();
+                            }
+                            if (metaTablero.verificarGanador(0, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(1, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(2, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(3, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(4, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(5, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(6, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(7, jugador1.getSimbolo()) ||
+                                    metaTablero.verificarGanador(8, jugador1.getSimbolo())) {
+                                // Ganó el jugador
+                                System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
+                                actualizar(jugador1, "ganado");
+                                actualizar(jugador2, "perdido");
+                                serializacion.actualizarJugador(jugador1);
+                                serializacion.actualizarJugador(jugador2);
+                                System.out.println("Estadísticas actualizadas:");
+                                serializacion.mostrarJugadores();
+                                return;
+
+                            } else if (metaTablero.verificarEmpate(plano - 1)) {
+                                System.out.println("El juego ha terminado en empate.");
+                                actualizar(jugador1, "empate");
+                                actualizar(jugador2, "empate");
+                                serializacion.actualizarJugador(jugador1);
+                                serializacion.actualizarJugador(jugador2);
+                                System.out.println("Estadísticas actualizadas:");
+                                serializacion.mostrarJugadores();
+                                return; // Terminar el juego
+                            }
+                            tableros.imprimirTablero();
+                            siguientePlano = posicion; // Guardar la posición elegida (1-9)
+                        }
+                        //Turno J2
+                        else {
+                            PCDificil pcDificil = (PCDificil) jugador2;
+                            boolean pedirPlano = planosCompletados.contains(siguientePlano - 1);
+                            if (pedirPlano) {
+                                System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Escoja plano (1-9) y posición (1-9):");
+
+                                plano = pcDificil.hacerJugadaDificilGrupo(tableros, jugador2.getSimbolo());
+                                posicion = pcDificil.hacerJugadaDificilPlano(plano - 1, jugador2.getSimbolo(), tableros.getTableros().get(plano - 1).getTablero());
+                                if (planosCompletados.contains(plano - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano.");
+                                    continue;
+                                }
+                                resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
+                            } else {
+                                int planoActual = (siguientePlano == 1) ? 1 : siguientePlano;
+                                if (planosCompletados.contains(planoActual - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
+
+                                    plano = pcDificil.hacerJugadaDificilGrupo(tableros, jugador2.getSimbolo());
+                                    posicion = pcDificil.hacerJugadaDificilPlano(plano, jugador2.getSimbolo(), tableros.getTableros().get(plano - 1).getTablero());
+
+                                    if (planosCompletados.contains(plano - 1)) {
+                                        System.out.println("Ese plano también está completado. Elija otro.");
+                                        continue;
+                                    }
+                                    resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
+                                } else {
+                                    System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Juega en el plano " + planoActual + ". Escoja la posición (1-9):");
+
+                                    posicion = pcDificil.hacerJugadaDificilPlano(planoActual, jugador2.getSimbolo(), tableros.getTableros().get(planoActual - 1).getTablero());
+                                    resultado = jugador2.hacerJugada(planoActual, posicion, tableros, jugador2.getSimbolo());
+                                    plano = planoActual;
+                                }
+                            }
+                            // Verificar ganador y empate después de la jugada
+                            if (tableros.verificarGanador(plano - 1, jugador2.getSimbolo())) {
+                                System.out.println("! Tablero Ganado !");
+                                tableros.rellenarTablero(jugador2.getSimbolo(), plano - 1);
+                                int filaMeta = (plano - 1) / 3;
+                                int columnaMeta = (plano - 1) % 3;
+                                if (!planosCompletados.contains(plano - 1)) {
+                                    planosCompletados.add(plano - 1);
+                                }
+                                metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador2.getSimbolo());
+                                System.out.println("Vista General del Meta - Tablero.Tablero:");
+                                metaTablero.imprimirTablero();
+                            } else if (tableros.verificarEmpate(plano - 1)) {
+                                System.out.println("Tablero Empatado");
+                                tableros.rellenarTablero('-', plano - 1);
+                                if (!planosCompletados.contains(plano - 1)) {
+                                    planosCompletados.add(plano - 1);
+                                }
+                                metaTablero.rellenarTablero(jugador1.getSimbolo(), plano - 1);
+                                System.out.println("Vista General del Meta - Tablero.Tablero:");
+                                metaTablero.imprimirTablero();
+                            }
+                            if (metaTablero.verificarGanador(0, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(1, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(2, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(3, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(4, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(5, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(6, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(7, jugador2.getSimbolo()) ||
+                                    metaTablero.verificarGanador(8, jugador2.getSimbolo())) {
+                                // Ganó el jugador J2
+                                System.out.println("¡" + jugador2.getNombreJugador() + " ha ganado el juego!");
+                                actualizar(jugador2, "ganado");
+                                actualizar(jugador1, "perdido");
+                                serializacion.actualizarJugador(jugador1);
+                                serializacion.actualizarJugador(jugador2);
+                                System.out.println("Estadísticas actualizadas:");
+                                serializacion.mostrarJugadores();
+                                return;
+                            } else if (metaTablero.verificarEmpate(plano - 1)) {
+                                System.out.println("El juego ha terminado en empate.");
+                                actualizar(jugador1, "empate");
+                                actualizar(jugador2, "empate");
                                 return; // Terminar el juego
                             }
                             tableros.imprimirTablero();
@@ -451,6 +694,7 @@ public class Juego implements Observador {
                         turno++;
                         // Aquí puedes agregar lógica para verificar si el juego terminó
                     }
+
 
                 }
 

@@ -51,7 +51,6 @@ public class TableroIndividual implements Tablero {
     public int recibirJugada(int plano,int fila, int columna ,char simbolo) {
         if (tablero[fila][columna] == '-') {
             tablero[fila][columna] = simbolo;
-            System.out.println("Entre al plano "+ fila + " y la posicion " + columna);
             return 1; // Retornar 1 para indicar jugada exitosa
         } else {
 
