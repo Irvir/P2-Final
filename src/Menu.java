@@ -61,13 +61,11 @@ public class Menu {
                             jugador2 = serializacion.recuperarJugador(nombreJugador2);
                         }
                         serializacion.guardarJugadores();
-                        serializacion.mostrarJugadores();
 
                         break;
                     case 2:
                         jugador2 = JugadorFactory.crearJugador("PC Fácil", "Easy");
                         serializacion.agregarJugador(jugador2);
-                        serializacion.mostrarJugadores();
                         break;
                     case 3:
                         jugador2 = JugadorFactory.crearJugador("PC Difícil", "Hard");
@@ -77,6 +75,10 @@ public class Menu {
                         System.out.println("Opción no válida, volviendo al menú principal.");
                         continue;
                 }
+                System.out.println("Estadísticas de los jugadores:");
+                System.out.println("Jugador 1: " + jugador1);
+                System.out.println("Jugador 2: " + jugador2);
+
                 metaTablero = new TableroIndividual();
                 tableros = new GrupoTableros();
                 juego = new Juego();

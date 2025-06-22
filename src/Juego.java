@@ -26,17 +26,13 @@ public class Juego implements Observador {
     public void actualizar(Jugador jugador, String tipo) {
         switch (tipo){
             case "ganado":
-                System.out.println("Ganadas: " + jugador.getPartidasGanadas());
                 jugador.setPartidasGanadas(jugador.getPartidasGanadas() + 1);
 
-                System.out.println("Ganadas Nueva: " + jugador.getPartidasGanadas());
 
                 break;
             case "perdido":
-                System.out.println("Perdidos: " + jugador.getPartidasPerdidas());
 
                 jugador.setPartidasPerdidas(jugador.getPartidasPerdidas() + 1);
-                System.out.println("Perdidos Nueva: " + jugador.getPartidasPerdidas());
                 break;
             case "empate":
                 jugador.setPartidasEmpatadas(jugador.getPartidasEmpatadas() + 1);
@@ -67,7 +63,7 @@ public class Juego implements Observador {
         sumaDados1 =100;
 
         if (sumaDados1 > sumaDados2) {
-            System.out.println("-- Jugadores.Jugador '" + jugador1.getNombreJugador() + "' Tiene que escoger el signo.");
+            System.out.println("Jugador '" + jugador1.getNombreJugador() + "' Tiene que escoger el signo.");
             signoAux = in.next().charAt(0);
             if (signoAux=='x' || signoAux=='X') {
                 signoGanador = 'X';
@@ -84,14 +80,14 @@ public class Juego implements Observador {
 
         } else if (sumaDados1 < sumaDados2) {
             if (jugador2 instanceof PCFacil || jugador2 instanceof PCDificil) {
-                System.out.println("-- Jugadores.Jugador '" + jugador2.getNombreJugador() + "' no puede escoger el signo.");
+                System.out.println("Jugador '" + jugador2.getNombreJugador() + "' no puede escoger el signo.");
                 System.out.println("-- Por lo que su signo será 'O' y el del jugador 1 será 'X'.");
                 signoGanador = 'O';
                 jugador2.setSimbolo(signoGanador);
                 signoPerdedor = 'X';
                 jugador1.setSimbolo(signoPerdedor);
             } else {
-                System.out.println("-- Jugadores.Jugador '" + jugador2.getNombreJugador() + "' Tiene que escoger el signo.");
+                System.out.println("Jugador '" + jugador2.getNombreJugador() + "' Tiene que escoger el signo.");
                 signoAux = in.next().charAt(0);
                 if (signoAux=='x' || signoAux=='X') {
                     signoGanador = 'X';
