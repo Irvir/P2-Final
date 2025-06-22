@@ -70,23 +70,20 @@ public class PCFacil implements Jugador{
 
     @Override
     public String toString() {
-        return "PC Fácil {" +
-                "nombreJugador='" + nombreJugador + '\'' +
-                ", puntuacion=" + puntuacion +
-                ", partidasGanadas=" + partidasGanadas +
-                ", partidasPerdidas=" + partidasPerdidas +
-                ", partidasEmpatadas=" + partidasEmpatadas +
-                '}';
+        return "Tipo: PC Easy [ " +
+                "Nombre='" + nombreJugador + '\'' +
+                ", Ganadas=" + partidasGanadas +
+                ", Perdidas=" + partidasPerdidas +
+                ", Empatadas=" + partidasEmpatadas +
+                ']';
     }
     @Override
     public int hacerJugada(int plano, int posicion, GrupoTableros tableros, char simbolo) {
-        Random random = new Random();
-        int posicionRandom = random.nextInt(9)+1;
         int planoId = plano - 1;
         int fila = (posicion - 1) / 3;
         int columna = (posicion - 1) % 3;
 
-        tableros.recibirJugada(plano,fila, columna,simbolo);
+        tableros.recibirJugada(planoId,fila, columna,simbolo);
         return posicion;
     }
 

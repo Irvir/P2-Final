@@ -14,9 +14,9 @@ public class Menu {
     Jugador jugador1;
     Jugador jugador2;
     Juego juego;
-
     public void menu() {
         Serializacion serializacion = new Serializacion();
+
         Scanner in = new Scanner(System.in);
         while (true){
         System.out.println("Bienvenido al Gato de Gatos!");
@@ -31,8 +31,6 @@ public class Menu {
             System.out.println("Jugadores.Jugador no encontrado: " + nombreUsuario+" ,creando nuevo jugador.");
             jugador1 = JugadorFactory.crearJugador(nombreUsuario, "Humano");
             serializacion.agregarJugador(jugador1);
-            serializacion.guardarJugadores();
-            serializacion.mostrarJugadores();
 
         }
 
@@ -63,25 +61,30 @@ public class Menu {
                             jugador2 = serializacion.recuperarJugador(nombreJugador2);
                         }
                         serializacion.guardarJugadores();
+                        serializacion.mostrarJugadores();
+
                         break;
                     case 2:
-                        jugador2 = JugadorFactory.crearJugador("PC Fácil", "PC Fácil");
+                        jugador2 = JugadorFactory.crearJugador("PC Fácil", "Easy");
+                        serializacion.agregarJugador(jugador2);
+                        serializacion.mostrarJugadores();
                         break;
                     case 3:
-                        jugador2 = JugadorFactory.crearJugador("PC Difícil", "PC Difícil");
+                        jugador2 = JugadorFactory.crearJugador("PC Difícil", "Hard");
+                        serializacion.agregarJugador(jugador2);
                         break;
                     default:
                         System.out.println("Opción no válida, volviendo al menú principal.");
                         continue;
                 }
-
+                metaTablero = new TableroIndividual();
+                tableros = new GrupoTableros();
                 juego = new Juego();
-
 
                 juego.Juego(jugador1, jugador2, metaTablero, tableros);
                 break;
             case 2:
-                System.out.println("Cargando jugadores...");
+                System.out.println("Ranking Jugadores");
                 serializacion.mostrarJugadores();
                 break;
             case 3:

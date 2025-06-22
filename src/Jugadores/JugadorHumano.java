@@ -74,13 +74,12 @@ public class JugadorHumano implements Jugador{
 
     @Override
     public String toString() {
-        return "Jugadores.JugadorHumano{ " +
-                "nombreJugador='" + nombreJugador + '\'' +
-                ", puntuacion=" + puntuacion +
-                ", partidasGanadas=" + partidasGanadas +
-                ", partidasPerdidas=" + partidasPerdidas +
-                ", partidasEmpatadas=" + partidasEmpatadas +
-                '}';
+        return "Tipo: JugadorHumano [ " +
+                "Nombre='" + nombreJugador + '\'' +
+                ", Ganadas=" + partidasGanadas +
+                ", Perdidas=" + partidasPerdidas +
+                ", Empatadas=" + partidasEmpatadas +
+                ']';
     }
     @Override
     public int hacerJugada(int plano, int posicion, GrupoTableros tableros, char simbolo) {

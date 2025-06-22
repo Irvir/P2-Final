@@ -6,69 +6,89 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Serializacion implements Serializable {
-    ArrayList<Jugador> jugadores;
-    String archivo = "jugadores.dat";
+    private ArrayList<Jugador> jugadores = new ArrayList<>();
+    private final String archivo = "jugadores.txt";
 
-    public void agregarJugador(Jugador jugador) {
-        if (jugadores == null) {
-            jugadores = new ArrayList<>();
-        }
-        jugadores.add(jugador);
-    }
-    public void ordenarJugadores() {
-        if (jugadores != null) {
-            jugadores.sort((j1, j2) -> Integer.compare(j2.getPuntuacion(), j1.getPuntuacion()));
-        }
-    }
-    public void mostrarJugadores() {
-        ordenarJugadores();
+    // Cargar jugadores desde el archivo
+    private void cargarJugadores() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
             jugadores = (ArrayList<Jugador>) ois.readObject();
-            ordenarJugadores();
-            for (Jugador jugador : jugadores) {
-                System.out.println(jugador);
-            }
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error al deserializar los jugadores: piu" + e.getMessage());
+            jugadores = new ArrayList<>(); // aseguramos que no quede en null
         }
     }
-    public Jugador recuperarJugador(String nombre) {
-        Jugador jugadorRecuperado = null;
-        if (encontrarJugador(nombre)){
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
-                jugadores = (ArrayList<Jugador>) ois.readObject();
-                ordenarJugadores();
-                for (Jugador jugador : jugadores) {
-                    if (jugador.getNombreJugador().equalsIgnoreCase(nombre)) {
-                        jugadorRecuperado = jugador;
-                        break;
-                    }
-                }
-            } catch (IOException | ClassNotFoundException e) {
-                System.err.println("Error al recuperar el jugador: " + e.getMessage());
-            }
-        }
 
-        return jugadorRecuperado;
-    }
+    // Guardar jugadores al archivo
     public void guardarJugadores() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivo))) {
             oos.writeObject(jugadores);
         } catch (IOException e) {
-            System.err.println("Error al guardar los jugadores:s " + e.getMessage());
+            System.err.println("Error al guardar los jugadores: " + e.getMessage());
         }
     }
-    public boolean encontrarJugador(String nombre) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
-            jugadores = (ArrayList<Jugador>) ois.readObject();
-            ordenarJugadores();
-            for (Jugador jugador : jugadores) {
-                if (jugador.getNombreJugador().equalsIgnoreCase(nombre)) {
-                    return true;
-                }
+
+    // Agregar jugador si no existe
+    public void agregarJugador(Jugador jugador) {
+        cargarJugadores();
+        boolean existe = false;
+        for (Jugador j : jugadores) {
+            if (j.getNombreJugador().equalsIgnoreCase(jugador.getNombreJugador())) {
+                existe = true;
+                break;
             }
-        } catch (IOException | ClassNotFoundException e) {
+        }
+        if (!existe) {
+            jugadores.add(jugador);
+            guardarJugadores();
+        }
+    }
+
+    // Mostrar jugadores
+    public void mostrarJugadores() {
+        cargarJugadores();
+        ordenarJugadores();
+        int i = 1;
+        for (Jugador jugador : jugadores) {
+            System.out.println(i+"- "+jugador);
+            i++;
+        }
+    }
+
+    // Ordenar por puntuación descendente
+    private void ordenarJugadores() {
+        jugadores.sort((j1, j2) -> Integer.compare(j2.getPartidasGanadas(), j1.getPartidasGanadas()));
+    }
+
+    // Buscar jugador por nombre
+    public Jugador recuperarJugador(String nombre) {
+        cargarJugadores();
+        for (Jugador jugador : jugadores) {
+            if (jugador.getNombreJugador().equalsIgnoreCase(nombre)) {
+                return jugador;
+            }
+        }
+        return null;
+    }
+
+    // Verificar si jugador existe
+    public boolean encontrarJugador(String nombre) {
+        cargarJugadores();
+        for (Jugador jugador : jugadores) {
+            if (jugador.getNombreJugador().equalsIgnoreCase(nombre)) {
+                return true;
+            }
         }
         return false;
+    }
+    public void actualizarJugador(Jugador jugador) {
+        cargarJugadores();
+        for (int i = 0; i < jugadores.size(); i++) {
+            if (jugadores.get(i).getNombreJugador().equalsIgnoreCase(jugador.getNombreJugador())) {
+                jugadores.set(i, jugador);
+                guardarJugadores();
+                return;
+            }
+        }
+        System.out.println("Jugador no encontrado para actualizar: " + jugador.getNombreJugador());
     }
 }

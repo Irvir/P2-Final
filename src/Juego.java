@@ -1,7 +1,9 @@
 import Jugadores.Jugador;
+import Jugadores.JugadorHumano;
 import Jugadores.PCDificil;
 import Jugadores.PCFacil;
 import Observer.Observador;
+import Serializable.Serializacion;
 import Tablero.GrupoTableros;
 import Tablero.Tablero;
 import Tablero.TableroIndividual;
@@ -12,21 +14,29 @@ import java.util.Random;
 import java.util.Scanner;
 import Observer.Observador;
 
+
 public class Juego implements Observador {
 
     TableroIndividual metaTablero;
     GrupoTableros tableros;
 
-
+    Serializacion serializacion = new Serializacion();
 
     @Override
     public void actualizar(Jugador jugador, String tipo) {
         switch (tipo){
             case "ganado":
+                System.out.println("Ganadas: " + jugador.getPartidasGanadas());
                 jugador.setPartidasGanadas(jugador.getPartidasGanadas() + 1);
+
+                System.out.println("Ganadas Nueva: " + jugador.getPartidasGanadas());
+
                 break;
             case "perdido":
+                System.out.println("Perdidos: " + jugador.getPartidasPerdidas());
+
                 jugador.setPartidasPerdidas(jugador.getPartidasPerdidas() + 1);
+                System.out.println("Perdidos Nueva: " + jugador.getPartidasPerdidas());
                 break;
             case "empate":
                 jugador.setPartidasEmpatadas(jugador.getPartidasEmpatadas() + 1);
@@ -37,8 +47,6 @@ public class Juego implements Observador {
     public void Juego(Jugador jugador1, Jugador jugador2, TableroIndividual metaTablero, GrupoTableros tableros) {
         this.metaTablero = metaTablero;
         this.tableros = tableros;
-
-
 
         Scanner in = new Scanner(System.in);
         Random random = new Random();
@@ -132,159 +140,330 @@ public class Juego implements Observador {
         int siguientePlano = -1; // -1 indica que es el primer turno
         boolean turnoJ1 = gandador.equals("J1");
         int turno = 0;
-        while (true) {
-            if (turnoJ1) {
-                // Determinar si el siguiente plano está completado o es el primer turno
-                boolean pedirPlano = (turno == 0) || planosCompletados.contains(siguientePlano -1);
-                if (pedirPlano) {
-                    System.out.println("Turno de '" + jugador1.getNombreJugador() + "'. Escoja plano (1-9) y posición (1-9):");
-                    String input = in.nextLine();
-                    String[] partes = input.split(" ");
-                    plano = Integer.parseInt(partes[0]);
-                    posicion = Integer.parseInt(partes[1]);
-                    if (planosCompletados.contains(plano - 1)) {
-                        System.out.println("Ese plano ya está completado. Elija otro plano.");
-                        continue;
-                    }
-                    resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
-                } else {
-                    int planoActual = (siguientePlano == 1) ? 1 : siguientePlano;
-                    // Verificar si el plano actual ya está completado
-                    if (planosCompletados.contains(planoActual - 1)) {
-                        System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
-                        String input = in.nextLine();
-                        String[] partes = input.split(" ");
-                        plano = Integer.parseInt(partes[0]);
-                        posicion = Integer.parseInt(partes[1]);
-                        if (planosCompletados.contains(plano - 1)) {
-                            System.out.println("Ese plano también está completado. Elija otro.");
-                            continue;
-                        }
-                        resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
-                    } else {
-                        System.out.println("Turno de '" + jugador1.getNombreJugador() + "'. posición (1-9) en el tablero: " + planoActual);
-                        String input = in.nextLine();
-                        posicion = Integer.parseInt(input);
-                        resultado = jugador1.hacerJugada(planoActual, posicion, tableros, jugador1.getSimbolo());
-                        plano = planoActual;
-                    }
-                }
-                // Verificar ganador y empate después de la jugada
-                if (tableros.verificarGanador(plano - 1, jugador1.getSimbolo())) {
-                    System.out.println("Tablero Ganado");
-                    tableros.rellenarTablero(jugador1.getSimbolo(), plano - 1);
-                    int filaMeta = (plano - 1) / 3;
-                    int columnaMeta = (plano - 1) % 3;
-                    if (!planosCompletados.contains(plano - 1)) {
-                        System.out.println("-------------Plano completado: " + plano);
+        switch (gandador) {
+            case "J1":
+                if (jugador2 instanceof JugadorHumano) {
+                    while (true) {
+                        if (turnoJ1) {
+                            // Determinar si el siguiente plano está completado o es el primer turno
+                            boolean pedirPlano = (turno == 0) || planosCompletados.contains(siguientePlano - 1);
+                            if (pedirPlano) {
+                                System.out.println("Turno de '" + jugador1.getNombreJugador() + "'. Escoja plano (1-9) y posición (1-9):");
+                                String input = in.nextLine();
+                                String[] partes = input.split(" ");
+                                plano = Integer.parseInt(partes[0]);
+                                posicion = Integer.parseInt(partes[1]);
+                                if (planosCompletados.contains(plano - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano.");
+                                    continue;
+                                }
+                                resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
+                            } else {
+                                int planoActual = (siguientePlano == 1) ? 1 : siguientePlano;
+                                // Verificar si el plano actual ya está completado
+                                if (planosCompletados.contains(planoActual - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
+                                    String input = in.nextLine();
+                                    String[] partes = input.split(" ");
+                                    plano = Integer.parseInt(partes[0]);
+                                    posicion = Integer.parseInt(partes[1]);
+                                    if (planosCompletados.contains(plano - 1)) {
+                                        System.out.println("Ese plano también está completado. Elija otro.");
+                                        continue;
+                                    }
+                                    resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
+                                } else {
+                                    System.out.println("Turno de '" + jugador1.getNombreJugador() + "'. posición (1-9) en el tablero: " + planoActual);
+                                    String input = in.nextLine();
+                                    posicion = Integer.parseInt(input);
+                                    resultado = jugador1.hacerJugada(planoActual, posicion, tableros, jugador1.getSimbolo());
+                                    plano = planoActual;
+                                }
+                            }
+                            // Verificar ganador y empate después de la jugada
+                            if (tableros.verificarGanador(plano - 1, jugador1.getSimbolo())) {
+                                System.out.println("Tablero Ganado");
+                                tableros.rellenarTablero(jugador1.getSimbolo(), plano - 1);
+                                int filaMeta = (plano - 1) / 3;
+                                int columnaMeta = (plano - 1) % 3;
+                                if (!planosCompletados.contains(plano - 1)) {
+                                    System.out.println("-------------Plano completado: " + plano);
 
-                        planosCompletados.add(plano - 1);
-                    }
-                    metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador1.getSimbolo());
-                    System.out.println("Vista General del Meta - Tablero.Tablero:");
-                    metaTablero.imprimirTablero();
-                } else if (tableros.verificarEmpate(plano - 1)) {
-                    System.out.println("Tablero Empatado");
-                    tableros.rellenarTablero('-', plano - 1);
-                    if (!planosCompletados.contains(plano - 1)) {
-                        System.out.println("-------------Plano completado: " + plano);
+                                    planosCompletados.add(plano - 1);
+                                }
+                                metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador1.getSimbolo());
+                                System.out.println("Vista General del Meta - Tablero.Tablero:");
+                                metaTablero.imprimirTablero();
+                            } else if (tableros.verificarEmpate(plano - 1)) {
+                                System.out.println("Tablero Empatado");
+                                tableros.rellenarTablero('-', plano - 1);
+                                if (!planosCompletados.contains(plano - 1)) {
+                                    System.out.println("-------------Plano completado: " + plano);
 
-                        planosCompletados.add(plano - 1);
-                    }
-                    metaTablero.rellenarTablero(jugador1.getSimbolo(), plano - 1);
-                    System.out.println("Vista General del Meta - Tablero.Tablero:");
-                    metaTablero.imprimirTablero();
-                }
-                if (metaTablero.verificarGanador(plano - 1, jugador1.getSimbolo())) {
-                    System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
-                    actualizar(jugador1, "ganado");
-                    actualizar(jugador2, "perdido");
-                    return; // Terminar el juego
-                } else if (metaTablero.verificarEmpate(plano - 1)) {
-                    System.out.println("El juego ha terminado en empate.");
-                    actualizar(jugador1, "empate");
-                    actualizar(jugador2, "empate");
-                    return; // Terminar el juego
-                }
-                tableros.imprimirTablero();
-                siguientePlano = posicion; // Guardar la posición elegida (1-9)
-            } else {
-                boolean pedirPlano = planosCompletados.contains(siguientePlano -1);
-                if (pedirPlano) {
-                    System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Escoja plano (1-9) y posición (1-9):");
-                    String input = in.nextLine();
-                    String[] partes = input.split(" ");
-                    plano = Integer.parseInt(partes[0]);
-                    posicion = Integer.parseInt(partes[1]);
-                    if (planosCompletados.contains(plano - 1)) {
-                        System.out.println("Ese plano ya está completado. Elija otro plano.");
-                        continue;
-                    }
-                    resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
-                } else {
-                    int planoActual = (siguientePlano == 1) ? 1 : siguientePlano;
-                    if (planosCompletados.contains(planoActual - 1)) {
-                        System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
-                        String input = in.nextLine();
-                        String[] partes = input.split(" ");
-                        plano = Integer.parseInt(partes[0]);
-                        posicion = Integer.parseInt(partes[1]);
-                        if (planosCompletados.contains(plano - 1)) {
-                            System.out.println("Ese plano también está completado. Elija otro.");
-                            continue;
+                                    planosCompletados.add(plano - 1);
+                                }
+                                metaTablero.rellenarTablero(jugador1.getSimbolo(), plano - 1);
+                                System.out.println("Vista General del Meta - Tablero.Tablero:");
+                                metaTablero.imprimirTablero();
+                            }
+                            if (metaTablero.verificarGanador(plano - 1, jugador1.getSimbolo())) {
+                                System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
+                                actualizar(jugador1, "ganado");
+                                actualizar(jugador2, "perdido");
+                                return; // Terminar el juego
+                            } else if (metaTablero.verificarEmpate(plano - 1)) {
+                                System.out.println("El juego ha terminado en empate.");
+                                actualizar(jugador1, "empate");
+                                actualizar(jugador2, "empate");
+                                return; // Terminar el juego
+                            }
+                            tableros.imprimirTablero();
+                            siguientePlano = posicion; // Guardar la posición elegida (1-9)
+                        } else {
+                            boolean pedirPlano = planosCompletados.contains(siguientePlano - 1);
+                            if (pedirPlano) {
+                                System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Escoja plano (1-9) y posición (1-9):");
+                                String input = in.nextLine();
+                                String[] partes = input.split(" ");
+                                plano = Integer.parseInt(partes[0]);
+                                posicion = Integer.parseInt(partes[1]);
+                                if (planosCompletados.contains(plano - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano.");
+                                    continue;
+                                }
+                                resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
+                            } else {
+                                int planoActual = (siguientePlano == 1) ? 1 : siguientePlano;
+                                if (planosCompletados.contains(planoActual - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
+                                    String input = in.nextLine();
+                                    String[] partes = input.split(" ");
+                                    plano = Integer.parseInt(partes[0]);
+                                    posicion = Integer.parseInt(partes[1]);
+                                    if (planosCompletados.contains(plano - 1)) {
+                                        System.out.println("Ese plano también está completado. Elija otro.");
+                                        continue;
+                                    }
+                                    resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
+                                } else {
+                                    System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Juega en el plano " + planoActual + ". Escoja la posición (1-9):");
+                                    String input = in.nextLine();
+                                    posicion = Integer.parseInt(input);
+                                    resultado = jugador2.hacerJugada(planoActual, posicion, tableros, jugador2.getSimbolo());
+                                    plano = planoActual;
+                                }
+                            }
+                            // Verificar ganador y empate después de la jugada
+                            if (tableros.verificarGanador(plano - 1, jugador2.getSimbolo())) {
+                                System.out.println("Tablero Ganado");
+                                tableros.rellenarTablero(jugador2.getSimbolo(), plano - 1);
+                                int filaMeta = (plano - 1) / 3;
+                                int columnaMeta = (plano - 1) % 3;
+                                if (!planosCompletados.contains(plano - 1)) {
+                                    System.out.println("-------------Plano completado: " + plano);
+                                    System.out.println("-------------ENTRE AL PLANO------------- ");
+                                    planosCompletados.add(plano - 1);
+                                }
+                                metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador2.getSimbolo());
+                                System.out.println("Vista General del Meta - Tablero.Tablero:");
+                                metaTablero.imprimirTablero();
+                            } else if (tableros.verificarEmpate(plano - 1)) {
+                                System.out.println("Tablero Empatado");
+                                tableros.rellenarTablero('-', plano - 1);
+                                if (!planosCompletados.contains(plano - 1)) {
+                                    System.out.println("-------------Plano completado: " + plano);
+                                    planosCompletados.add(plano - 1);
+                                }
+                                metaTablero.rellenarTablero(jugador1.getSimbolo(), plano - 1);
+                                System.out.println("Vista General del Meta - Tablero.Tablero:");
+                                metaTablero.imprimirTablero();
+                            }
+                            if (metaTablero.verificarGanador(plano - 1, jugador1.getSimbolo())) {
+                                System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
+                                actualizar(jugador1, "ganado");
+                                actualizar(jugador2, "perdido");
+                                return; // Terminar el juego
+                            } else if (metaTablero.verificarEmpate(plano - 1)) {
+                                System.out.println("El juego ha terminado en empate.");
+                                actualizar(jugador1, "empate");
+                                actualizar(jugador2, "empate");
+                                return; // Terminar el juego
+                            }
+                            tableros.imprimirTablero();
+                            siguientePlano = posicion;
                         }
-                        resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
-                    } else {
-                        System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Juega en el plano " + planoActual + ". Escoja la posición (1-9):");
-                        String input = in.nextLine();
-                        posicion = Integer.parseInt(input);
-                        resultado = jugador2.hacerJugada(planoActual, posicion, tableros, jugador2.getSimbolo());
-                        plano = planoActual;
+                        // Alternar turno
+                        turnoJ1 = !turnoJ1;
+                        turno++;
+                        // Aquí puedes agregar lógica para verificar si el juego terminó
                     }
                 }
-                // Verificar ganador y empate después de la jugada
-                if (tableros.verificarGanador(plano - 1, jugador2.getSimbolo())) {
-                    System.out.println("Tablero Ganado");
-                    tableros.rellenarTablero(jugador2.getSimbolo(), plano - 1);
-                    int filaMeta = (plano - 1) / 3;
-                    int columnaMeta = (plano - 1) % 3;
-                    if (!planosCompletados.contains(plano - 1)) {
-                        System.out.println("-------------Plano completado: " + plano);
-                        System.out.println("-------------ENTRE AL PLANO------------- ");
-                        planosCompletados.add(plano -1);
+                if (jugador2 instanceof PCFacil) {
+                    Random random = new Random();
+                    while (true) {
+                        if (turnoJ1) {
+                            // Determinar si el siguiente plano está completado o es el primer turno
+                            boolean pedirPlano = (turno == 0) || planosCompletados.contains(siguientePlano - 1);
+                            if (pedirPlano) {
+                                System.out.println("Turno de '" + jugador1.getNombreJugador() + "'. Escoja plano (1-9) y posición (1-9):");
+                                String input = in.nextLine();
+                                String[] partes = input.split(" ");
+                                plano = Integer.parseInt(partes[0]);
+                                posicion = Integer.parseInt(partes[1]);
+                                if (planosCompletados.contains(plano - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano.");
+                                    continue;
+                                }
+                                resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
+                            } else {
+                                int planoActual = (siguientePlano == 1) ? 1 : siguientePlano;
+                                // Verificar si el plano actual ya está completado
+                                if (planosCompletados.contains(planoActual - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
+                                    String input = in.nextLine();
+                                    String[] partes = input.split(" ");
+                                    plano = Integer.parseInt(partes[0]);
+                                    posicion = Integer.parseInt(partes[1]);
+                                    if (planosCompletados.contains(plano - 1)) {
+                                        System.out.println("Ese plano también está completado. Elija otro.");
+                                        continue;
+                                    }
+                                    resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
+                                } else {
+                                    System.out.println("Turno de '" + jugador1.getNombreJugador() + "'. posición (1-9) en el tablero: " + planoActual);
+                                    String input = in.nextLine();
+                                    posicion = Integer.parseInt(input);
+                                    resultado = jugador1.hacerJugada(planoActual, posicion, tableros, jugador1.getSimbolo());
+                                    plano = planoActual;
+                                }
+                            }
+                            // Verificar ganador y empate después de la jugada
+                            if (tableros.verificarGanador(plano - 1, jugador1.getSimbolo())) {
+                                System.out.println("Tablero Ganado");
+                                tableros.rellenarTablero(jugador1.getSimbolo(), plano - 1);
+                                int filaMeta = (plano - 1) / 3;
+                                int columnaMeta = (plano - 1) % 3;
+                                if (!planosCompletados.contains(plano - 1)) {
+                                    System.out.println("-------------Plano completado: " + plano);
+
+                                    planosCompletados.add(plano - 1);
+                                }
+                                metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador1.getSimbolo());
+                                System.out.println("Vista General del Meta - Tablero.Tablero:");
+                                metaTablero.imprimirTablero();
+                            } else if (tableros.verificarEmpate(plano - 1)) {
+                                System.out.println("Tablero Empatado");
+                                tableros.rellenarTablero('-', plano - 1);
+                                if (!planosCompletados.contains(plano - 1)) {
+                                    System.out.println("-------------Plano completado: " + plano);
+
+                                    planosCompletados.add(plano - 1);
+                                }
+                                metaTablero.rellenarTablero(jugador1.getSimbolo(), plano - 1);
+                                System.out.println("Vista General del Meta - Tablero.Tablero:");
+                                metaTablero.imprimirTablero();
+                            }
+                            if (metaTablero.verificarGanador(plano - 1, jugador1.getSimbolo())) {
+                                System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
+                                actualizar(jugador1, "ganado");
+                                actualizar(jugador2, "perdido");
+                                return; // Terminar el juego
+                            } else if (metaTablero.verificarEmpate(plano - 1)) {
+                                System.out.println("El juego ha terminado en empate.");
+                                actualizar(jugador1, "empate");
+                                actualizar(jugador2, "empate");
+                                return; // Terminar el juego
+                            }
+                            tableros.imprimirTablero();
+                            siguientePlano = posicion; // Guardar la posición elegida (1-9)
+                        }
+                        //Jugador 2
+                        else {
+                            boolean pedirPlano = planosCompletados.contains(siguientePlano - 1);
+                            if (pedirPlano) {
+                                System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Se escogerá un plano (1-9) y posición (1-9) aleatoria:");
+
+                                plano = random.nextInt(9)+1;
+                                posicion = random.nextInt(9)+1;
+                                if (planosCompletados.contains(plano - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano.");
+                                    continue;
+                                }
+                                resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
+                            } else {
+                                int planoActual = (siguientePlano == 1) ? 1 : siguientePlano;
+                                if (planosCompletados.contains(planoActual - 1)) {
+                                    System.out.println("Ese plano ya está completado. Se elegirá otro plano y posición (1-9 1-9) aleatorio:");
+
+                                    plano = random.nextInt(9)+1;
+                                    posicion = random.nextInt(9)+1;
+                                    if (planosCompletados.contains(plano - 1)) {
+                                        System.out.println("Ese plano también está completado. Elija otro.");
+                                        continue;
+                                    }
+                                    resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
+                                } else {
+                                    System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Juega en el plano " + planoActual + ". Escoja la posición (1-9):");
+
+                                    posicion = random.nextInt(9)+1;
+                                    resultado = jugador2.hacerJugada(planoActual, posicion, tableros, jugador2.getSimbolo());
+                                    plano = planoActual;
+                                }
+                            }
+                            // Verificar ganador y empate después de la jugada
+                            if (tableros.verificarGanador(plano - 1, jugador2.getSimbolo())) {
+                                System.out.println("Tablero Ganado");
+                                tableros.rellenarTablero(jugador2.getSimbolo(), plano - 1);
+                                int filaMeta = (plano - 1) / 3;
+                                int columnaMeta = (plano - 1) % 3;
+                                if (!planosCompletados.contains(plano - 1)) {
+                                    System.out.println("-------------Plano completado: " + plano);
+                                    planosCompletados.add(plano - 1);
+                                }
+                                metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador2.getSimbolo());
+                                System.out.println("Vista General del Meta - Tablero.Tablero:");
+                                metaTablero.imprimirTablero();
+                            } else if (tableros.verificarEmpate(plano - 1)) {
+                                System.out.println("Tablero Empatado");
+                                tableros.rellenarTablero('-', plano - 1);
+                                if (!planosCompletados.contains(plano - 1)) {
+                                    System.out.println("-------------Plano completado: " + plano);
+                                    planosCompletados.add(plano - 1);
+                                }
+                                metaTablero.rellenarTablero(jugador1.getSimbolo(), plano - 1);
+                                System.out.println("Vista General del Meta - Tablero.Tablero:");
+                                metaTablero.imprimirTablero();
+                            }
+                            if (metaTablero.verificarGanador(plano - 1, jugador1.getSimbolo())) {
+                                System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
+                                actualizar(jugador1, "ganado");
+                                actualizar(jugador2, "perdido");
+
+                                return; // Terminar el juego
+                            } else if (metaTablero.verificarEmpate(plano - 1)) {
+                                System.out.println("El juego ha terminado en empate.");
+                                actualizar(jugador1, "empate");
+                                actualizar(jugador2, "empate");
+
+                                return; // Terminar el juego
+                            }
+                            tableros.imprimirTablero();
+                            siguientePlano = posicion;
+                        }
+                        // Alternar turno
+                        turnoJ1 = !turnoJ1;
+                        turno++;
+                        // Aquí puedes agregar lógica para verificar si el juego terminó
                     }
-                    metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador2.getSimbolo());
-                    System.out.println("Vista General del Meta - Tablero.Tablero:");
-                    metaTablero.imprimirTablero();
-                } else if (tableros.verificarEmpate(plano - 1)) {
-                    System.out.println("Tablero Empatado");
-                    tableros.rellenarTablero('-', plano - 1);
-                    if (!planosCompletados.contains(plano - 1)) {
-                        System.out.println("-------------Plano completado: " + plano);
-                        planosCompletados.add(plano -1);
-                    }
-                    metaTablero.rellenarTablero(jugador1.getSimbolo(), plano - 1);
-                    System.out.println("Vista General del Meta - Tablero.Tablero:");
-                    metaTablero.imprimirTablero();
+
                 }
-                if (metaTablero.verificarGanador(plano - 1, jugador1.getSimbolo())) {
-                    System.out.println("¡" + jugador1.getNombreJugador() + " ha ganado el juego!");
-                    actualizar(jugador1, "ganado");
-                    actualizar(jugador2, "perdido");
-                    return; // Terminar el juego
-                } else if (metaTablero.verificarEmpate(plano - 1)) {
-                    System.out.println("El juego ha terminado en empate.");
-                    actualizar(jugador1, "empate");
-                    actualizar(jugador2, "empate");
-                    return; // Terminar el juego
-                }
-                tableros.imprimirTablero();
-                siguientePlano = posicion;
-            }
-            // Alternar turno
-            turnoJ1 = !turnoJ1;
-            turno++;
-            // Aquí puedes agregar lógica para verificar si el juego terminó
+
+            case "J2":
+                System.out.println("El jugador '" + jugador2.getNombreJugador() + "' comienza el juego.");
+                break;
+            default:
+                System.out.println("Error al determinar el jugador inicial.");
+                return;
         }
     }
 }

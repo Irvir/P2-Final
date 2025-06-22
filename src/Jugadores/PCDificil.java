@@ -69,13 +69,12 @@ public class PCDificil implements Jugador{
 
     @Override
     public String toString() {
-        return "PC Difícil {" +
-                "nombreJugador='" + nombreJugador + '\'' +
-                ", puntuacion=" + puntuacion +
-                ", partidasGanadas=" + partidasGanadas +
-                ", partidasPerdidas=" + partidasPerdidas +
-                ", partidasEmpatadas=" + partidasEmpatadas +
-                '}';
+        return "Tipo: PC Hard [ " +
+                "Nombre='" + nombreJugador + '\'' +
+                ", Ganadas=" + partidasGanadas +
+                ", Perdidas=" + partidasPerdidas +
+                ", Empatadas=" + partidasEmpatadas +
+                ']';
     }
     @Override
     public int hacerJugada(int plano, int posicion, GrupoTableros tableros, char simbolo) {
