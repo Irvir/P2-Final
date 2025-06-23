@@ -1050,14 +1050,11 @@ public class Juego implements Observador {
                                 serializacion.mostrarJugadores();
                                 return; // Terminar el juego
                             }
-                            /*
                             try{
                                 Thread.sleep(3000); // Esperar 3 segundos antes de la siguiente jugada
                             } catch (InterruptedException e) {
                                 System.out.println("Error al esperar entre jugadas: " + e.getMessage());
                             }
-
-                             */
                             tableros.imprimirTablero();
                             siguientePlano = posicion; // Guardar la posición elegida (1-9)
                         }
@@ -1267,14 +1264,13 @@ public class Juego implements Observador {
                                 serializacion.mostrarJugadores();
                                 return; // Terminar el juego
                             }
-                            /*
+
                             try{
                                 Thread.sleep(3000); // Esperar 3 segundos antes de la siguiente jugada
                             } catch (InterruptedException e) {
                                 System.out.println("Error al esperar entre jugadas: " + e.getMessage());
                             }
 
-                             */
 
 
                             tableros.imprimirTablero();
