@@ -31,6 +31,13 @@ public class TableroIndividual implements Tablero {
         }
 
     }
+    public void marcarCeldaMeta(int plano, char simbolo) {
+        int fila = plano / 3;
+        int columna = plano % 3;
+        if (tablero[fila][columna] == '-') {
+            tablero[fila][columna] = simbolo;
+        }
+    }
 
     @Override
     public void imprimirTablero() {

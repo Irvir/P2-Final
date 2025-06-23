@@ -166,10 +166,14 @@ public class PCDificil implements Jugador{
     public int hacerJugadaDificilGrupo(GrupoTableros grupo, char simbolo) {
         for (int plano = 0; plano < 9; plano++) {
             char[][] tablero = grupo.getTableros().get(plano).getTablero();
+
             int posicion = hacerJugadaDificilPlano(plano, simbolo, tablero);
             if (posicion != -1) {
-                return posicion;
+                System.out.println("Posición encontrada en plano " + (plano + 1) + ": " + posicion);
+
+                return plano + 1;
             }
+
         }
         return -1;
     }
