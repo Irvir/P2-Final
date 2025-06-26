@@ -23,10 +23,11 @@ public class Menu {
 
         System.out.println("Ingrese su nombre de usuario:");
         nombreUsuario = in.nextLine();
-
+        //Encuentra Jugador, si lo encuentra lo recupera (las estadísticas).
         if (serializacion.encontrarJugador(nombreUsuario)) {
             System.out.println("Jugadores.Jugador encontrado: " + nombreUsuario);
             jugador1 = serializacion.recuperarJugador(nombreUsuario);
+        //Caso contrario lo crea.
         } else {
             System.out.println("Jugadores.Jugador no encontrado: " + nombreUsuario+" ,creando nuevo jugador.");
             jugador1 = JugadorFactory.crearJugador(nombreUsuario, "Humano");
@@ -40,6 +41,7 @@ public class Menu {
         System.out.println("3. Exit");
         System.out.print("Seleccione una opción: ");
         int opcion = in.nextInt();
+        //Crea Jugadores.
         switch (opcion){
             case 1:
                 System.out.println("Iniciando el juego...");
@@ -49,9 +51,11 @@ public class Menu {
                 opcion = in.nextInt();
                 switch (opcion){
                     case 1:
+
                         System.out.println("Ingrese el nombre del segundo jugador:");
                         in.nextLine();
                         String nombreJugador2 = in.nextLine();
+                        //Encuentra al Jugador 2, y realiza los procedimientos anteriores del Jugador1
                         if (!serializacion.encontrarJugador(nombreJugador2)){
                         System.out.println("------------NO SE ENCONTRÓ EL JUGADOR, CREANDO NUEVO JUGADOR------------");
                         jugador2 = JugadorFactory.crearJugador(nombreJugador2, "Humano");
