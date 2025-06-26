@@ -1,5 +1,6 @@
 package Jugadores;
 
+//Implementa patron Factory para crear instancias de Jugador.
 public class JugadorFactory{
 
     static public Jugador crearJugador(String nombreJugador, String tipoJugador) {

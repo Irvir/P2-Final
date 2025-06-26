@@ -22,7 +22,7 @@ public class Juego implements Observador {
     GrupoTableros tableros;
 
     Serializacion serializacion = new Serializacion();
-    //Actualiza las estadísticas de cada Jugador, dependiendo del caso.
+    // Actualiza las estadísticas del jugador según el resultado recibido.
     @Override
     public void actualizar(Jugador jugador, String tipo) {
         switch (tipo){
@@ -37,8 +37,7 @@ public class Juego implements Observador {
                 break;
         }
     }
-    //Designa que Jugador comienza el turno y el Signo.
-    //Los PC vienen por defecto con su nombre y signo predefinidos.
+    // Determina qué jugador inicia, asigna símbolos y prepara los tableros.
     public void Juego(Jugador jugador1, Jugador jugador2, TableroIndividual metaTablero, GrupoTableros tableros) {
         this.metaTablero = metaTablero;
         this.tableros = tableros;
@@ -59,7 +58,7 @@ public class Juego implements Observador {
         char signoPerdedor;
         char signoAux;
 
-
+// Lógica para decidir quién escoge el símbolo y quién inicia
         if (sumaDados1 > sumaDados2) {
             System.out.println("Jugador '" + jugador1.getNombreJugador() + "' Tiene que escoger el signo.");
             signoAux = in.next().charAt(0);
@@ -100,25 +99,26 @@ public class Juego implements Observador {
                     jugador2.setSimbolo(signoPerdedor);
                 }
             }
-        } else {
+        }
+        // Si hay empate en los dados, se repite el proceso
+        else {
             System.out.println("1. Empate en los dados, se vuelve a lanzar.");
             Juego(jugador1,jugador2, metaTablero, tableros);
         }
-
+        // Inicializa los tableros y registra observadores
         System.out.println("Vista General del Meta - Tablero.Tablero:");
         metaTablero = new TableroIndividual();
         metaTablero.imprimirTablero();
         System.out.println("Tableros de Juego:");
         tableros = new GrupoTableros();
-        //Agrega los Observadores para poder actualizar los datos de los jugadores.
+        // Registra observadores en cada tablero individual
 
         for(TableroIndividual t: tableros.getTableros()){
             t.registraObservador(this);
         }
         tableros.imprimirTablero();
-
+        // Llama a la lógica principal del juego según el jugador que inicia
         if (sumaDados1> sumaDados2) {
-
             jugar(jugador1, jugador2, metaTablero, tableros,"J1");
         } else {
             jugar(jugador1, jugador2, metaTablero, tableros,"J2");
@@ -127,7 +127,7 @@ public class Juego implements Observador {
 
 
     }
-    //Jugar implementa la lógica del Juego.
+    //Jugar implementa la lógica del Juego.// Lógica principal del juego: turnos, jugadas, verificación de ganadores y empates.
     public void jugar(Jugador jugador1, Jugador jugador2, TableroIndividual metaTablero, GrupoTableros tableros, String gandador) {
         Scanner in = new Scanner(System.in);
         ArrayList<Integer> planosCompletados = new ArrayList<>();
@@ -142,9 +142,9 @@ public class Juego implements Observador {
         for (int i = 0;i<9;i++){
             planosIncompletos.add(i);
         }
-
+        // Estructura de control para manejar los diferentes casos de inicio de juego
         switch (gandador) {
-            //Caso de que J1 gane el Turno.
+            // Lógica para cuando J1 inicia
             case "J1":
                 //Caso de que J2 sea Humano.
                 if (jugador2 instanceof JugadorHumano) {

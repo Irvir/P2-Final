@@ -7,9 +7,6 @@ public interface Jugador extends Serializable {
     String getNombreJugador();
     void setNombreJugador(String nombreJugador);
 
-    int getPuntuacion();
-    void setPuntuacion(int puntuacion);
-
     int getPartidasGanadas();
     void setPartidasGanadas(int partidasGanadas);
 

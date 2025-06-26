@@ -4,7 +4,7 @@ import Jugadores.Jugador;
 
 import java.io.*;
 import java.util.ArrayList;
-
+//Implementa la serialización para guardar y recuperar jugadores en un archivo.
 public class Serializacion implements Serializable {
     private ArrayList<Jugador> jugadores = new ArrayList<>();
     private final String archivo = "jugadores.txt";
@@ -14,11 +14,11 @@ public class Serializacion implements Serializable {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
             jugadores = (ArrayList<Jugador>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            jugadores = new ArrayList<>(); // aseguramos que no quede en null
+            jugadores = new ArrayList<>();
         }
     }
 
-    // Guardar jugadores al archivo
+    // Guarda jugadores al archivo
     public void guardarJugadores() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivo))) {
             oos.writeObject(jugadores);
@@ -80,6 +80,7 @@ public class Serializacion implements Serializable {
         }
         return false;
     }
+    // Actualizar jugador existente
     public void actualizarJugador(Jugador jugador) {
         cargarJugadores();
         for (int i = 0; i < jugadores.size(); i++) {

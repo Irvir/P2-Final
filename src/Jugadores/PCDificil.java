@@ -4,7 +4,6 @@ import Tablero.TableroIndividual;
 
 public class PCDificil implements Jugador{
     private String nombreJugador;
-    private int puntuacion;
     private char simbolo;
     private int partidasGanadas;
     private int partidasPerdidas;
@@ -12,7 +11,6 @@ public class PCDificil implements Jugador{
 
     public PCDificil() {
         this.nombreJugador = "PC Difícil";
-        this.puntuacion = 0;
         this.partidasGanadas = 0;
         this.partidasPerdidas = 0;
         this.partidasEmpatadas = 0;
@@ -26,16 +24,6 @@ public class PCDificil implements Jugador{
     @Override
     public void setNombreJugador(String nombreJugador) {
         this.nombreJugador = nombreJugador;
-    }
-
-    @Override
-    public int getPuntuacion() {
-        return puntuacion;
-    }
-
-    @Override
-    public void setPuntuacion(int puntuacion) {
-        this.puntuacion = puntuacion;
     }
 
     @Override
@@ -78,78 +66,81 @@ public class PCDificil implements Jugador{
                 ']';
     }
     @Override
+    // Método para hacer una jugada en el juego.
     public int hacerJugada(int plano, int posicion, GrupoTableros tableros, char simbolo) {
         int planoId = plano - 1;
         int fila = (posicion - 1) / 3;
         int columna = (posicion - 1) % 3;
+        // Llama al método recibirJugada del tablero específico.
         return tableros.recibirJugada(planoId, fila,columna, simbolo);
     }
+    // Método para hacer una jugada difícil en un plano específico.
     public int hacerJugadaDificilPlano(int plano, char simbolo, char[][] tablero) {
     char simboloOponente = (simbolo == 'X') ? 'O' : 'X';
-    // 1. Ganar en fila
+    // 1. Ganar en fila con una jugada.
     for (int i = 0; i < 3; i++) {
-        int count = 0, emptyCol = -1;
+        int cuenta = 0, columnaVacia = -1;
         for (int j = 0; j < 3; j++) {
-            if (tablero[i][j] == simbolo) count++;
-            else if (tablero[i][j] == '-') emptyCol = j;
+            if (tablero[i][j] == simbolo) cuenta++;
+            else if (tablero[i][j] == '-') columnaVacia = j;
         }
-        if (count == 2 && emptyCol != -1) return i * 3 + emptyCol + 1;
+        if (cuenta == 2 && columnaVacia != -1) return i * 3 + columnaVacia + 1;
     }
-    // 2. Ganar en columna
+    // 2. Ganar en columna con una jugada.
     for (int j = 0; j < 3; j++) {
-        int count = 0, emptyRow = -1;
+        int cuenta = 0, filaVacia = -1;
         for (int i = 0; i < 3; i++) {
-            if (tablero[i][j] == simbolo) count++;
-            else if (tablero[i][j] == '-') emptyRow = i;
+            if (tablero[i][j] == simbolo) cuenta++;
+            else if (tablero[i][j] == '-') filaVacia = i;
         }
-        if (count == 2 && emptyRow != -1) return emptyRow * 3 + j + 1;
+        if (cuenta == 2 && filaVacia != -1) return filaVacia * 3 + j + 1;
     }
     // 3. Ganar en diagonal principal
-    int count = 0, emptyDiag = -1;
+    int cuenta = 0, diagonalVacia = -1;
     for (int i = 0; i < 3; i++) {
-        if (tablero[i][i] == simbolo) count++;
-        else if (tablero[i][i] == '-') emptyDiag = i;
+        if (tablero[i][i] == simbolo) cuenta++;
+        else if (tablero[i][i] == '-') diagonalVacia = i;
     }
-    if (count == 2 && emptyDiag != -1) return emptyDiag * 3 + emptyDiag + 1;
+    if (cuenta == 2 && diagonalVacia != -1) return diagonalVacia * 3 + diagonalVacia + 1;
     // 4. Ganar en diagonal secundaria
-    count = 0; emptyDiag = -1;
+    cuenta = 0; diagonalVacia = -1;
     for (int i = 0; i < 3; i++) {
-        if (tablero[i][2 - i] == simbolo) count++;
-        else if (tablero[i][2 - i] == '-') emptyDiag = i;
+        if (tablero[i][2 - i] == simbolo) cuenta++;
+        else if (tablero[i][2 - i] == '-') diagonalVacia = i;
     }
-    if (count == 2 && emptyDiag != -1) return emptyDiag * 3 + (2 - emptyDiag) + 1;
+    if (cuenta == 2 && diagonalVacia != -1) return diagonalVacia * 3 + (2 - diagonalVacia) + 1;
     // 5. Bloquear fila
     for (int i = 0; i < 3; i++) {
-        int countOponente = 0, emptyCol = -1;
+        int cuentaOponente = 0, columnaVacia = -1;
         for (int j = 0; j < 3; j++) {
-            if (tablero[i][j] == simboloOponente) countOponente++;
-            else if (tablero[i][j] == '-') emptyCol = j;
+            if (tablero[i][j] == simboloOponente) cuentaOponente++;
+            else if (tablero[i][j] == '-') columnaVacia = j;
         }
-        if (countOponente == 2 && emptyCol != -1) return i * 3 + emptyCol + 1;
+        if (cuentaOponente == 2 && columnaVacia != -1) return i * 3 + columnaVacia + 1;
     }
     // 6. Bloquear columna
     for (int j = 0; j < 3; j++) {
-        int countOponente = 0, emptyRow = -1;
+        int cuentaOponente = 0, filaVacia = -1;
         for (int i = 0; i < 3; i++) {
-            if (tablero[i][j] == simboloOponente) countOponente++;
-            else if (tablero[i][j] == '-') emptyRow = i;
+            if (tablero[i][j] == simboloOponente) cuentaOponente++;
+            else if (tablero[i][j] == '-') filaVacia = i;
         }
-        if (countOponente == 2 && emptyRow != -1) return emptyRow * 3 + j + 1;
+        if (cuentaOponente == 2 && filaVacia != -1) return filaVacia * 3 + j + 1;
     }
     // 7. Bloquear diagonal principal
-    count = 0; emptyDiag = -1;
+    cuenta = 0; diagonalVacia = -1;
     for (int i = 0; i < 3; i++) {
-        if (tablero[i][i] == simboloOponente) count++;
-        else if (tablero[i][i] == '-') emptyDiag = i;
+        if (tablero[i][i] == simboloOponente) cuenta++;
+        else if (tablero[i][i] == '-') diagonalVacia = i;
     }
-    if (count == 2 && emptyDiag != -1) return emptyDiag * 3 + emptyDiag + 1;
+    if (cuenta == 2 && diagonalVacia != -1) return diagonalVacia * 3 + diagonalVacia + 1;
     // 8. Bloquear diagonal secundaria
-    count = 0; emptyDiag = -1;
+    cuenta = 0; diagonalVacia = -1;
     for (int i = 0; i < 3; i++) {
-        if (tablero[i][2 - i] == simboloOponente) count++;
-        else if (tablero[i][2 - i] == '-') emptyDiag = i;
+        if (tablero[i][2 - i] == simboloOponente) cuenta++;
+        else if (tablero[i][2 - i] == '-') diagonalVacia = i;
     }
-    if (count == 2 && emptyDiag != -1) return emptyDiag * 3 + (2 - emptyDiag) + 1;
+    if (cuenta == 2 && diagonalVacia != -1) return diagonalVacia * 3 + (2 - diagonalVacia) + 1;
     // 9. Centro
     if (tablero[1][1] == '-') return 5;
     // 10. Esquinas
@@ -161,8 +152,11 @@ public class PCDificil implements Jugador{
     for (int i = 0; i < 3; i++)
         for (int j = 0; j < 3; j++)
             if (tablero[i][j] == '-') return i * 3 + j + 1;
-    return -1; // No hay jugada posible
+    // No hay jugada posible
+    return -1;
 }
+    // Método para hacer una jugada difícil en un grupo de tableros.
+    //Analiza cada tablero en el grupo y busca realizar una jugada.
     public int hacerJugadaDificilGrupo(GrupoTableros grupo, char simbolo) {
         for (int plano = 0; plano < 9; plano++) {
             char[][] tablero = grupo.getTableros().get(plano).getTablero();

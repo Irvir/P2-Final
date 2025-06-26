@@ -4,25 +4,31 @@ import Jugadores.Jugador;
 import Observer.Observador;
 
 import java.util.ArrayList;
-
+// Utiliza el patrón Composite para manejar múltiples tableros individuales como un solo tablero compuesto.
 public class TableroIndividual implements Tablero {
     private Observador observador;
 
     private char[][] tablero;
+    // Constructor que inicializa un tablero individual de 3x3.
     public TableroIndividual() {
         tablero = new char[3][3];
         char simbolo = '-';
         rellenarTablero(simbolo,0);
     }
+    //Método del Observer para registrar un observador.
     public void registraObservador(Observador observador) {
+
         this.observador = observador;
     }
+    // Método del Observer para notificar al observador con un mensaje.
     public void notificarObservador(Jugador jugador, String mensaje) {
+
         observador.actualizar(jugador, mensaje);
     }
 
 
     @Override
+    // Método para rellenar el tablero con un símbolo específico.
     public void rellenarTablero(char simbolo, int plano) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -31,15 +37,10 @@ public class TableroIndividual implements Tablero {
         }
 
     }
-    public void marcarCeldaMeta(int plano, char simbolo) {
-        int fila = plano / 3;
-        int columna = plano % 3;
-        if (tablero[fila][columna] == '-') {
-            tablero[fila][columna] = simbolo;
-        }
-    }
+
 
     @Override
+    // Método para imprimir el estado del tablero individual en un formato de 3x3.
     public void imprimirTablero() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -55,18 +56,20 @@ public class TableroIndividual implements Tablero {
     }
 
     @Override
+    // Método para recibir una jugada en el tablero individual.
     public int recibirJugada(int plano,int fila, int columna ,char simbolo) {
         if (tablero[fila][columna] == '-') {
             tablero[fila][columna] = simbolo;
-            return 1; // Retornar 1 para indicar jugada exitosa
+            // Retornar 1 para indicar jugada exitosa
+            return 1;
         } else {
-
             System.out.println("Posición ya ocupada: " + (fila* 3 +columna+1)+" intenta otra vez.");
             return -1;
         }
     }
 
     @Override
+    // Método para verificar si un jugador ha ganado en el tablero individual.
     public boolean verificarGanador(int posicionTablero,char simbolo) {
 
         for (int i = 0; i < 3; i++) {
@@ -89,10 +92,10 @@ public class TableroIndividual implements Tablero {
             }
 
         }
-        // Implementar lógica para verificar ganador
         return false;
     }
     @Override
+    //Método para verificar si un tablero individual ha empatado.
     public boolean verificarEmpate(int posicionTablero) {
         // Si hay un ganador, no es empate
         if (verificarGanador(posicionTablero, 'X') || verificarGanador(posicionTablero, 'O')) {

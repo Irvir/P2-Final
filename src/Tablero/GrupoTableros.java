@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//Composite
+//Utiliza el patrón Composite para manejar múltiples tableros individuales como un solo tablero compuesto.
 public class GrupoTableros implements Tablero {
     private List<TableroIndividual> tableros;
 
-
+    // Constructor que inicializa un grupo de 9 tableros individuales.
     public GrupoTableros() {
         tableros = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
@@ -21,10 +21,9 @@ public class GrupoTableros implements Tablero {
     }
 
     @Override
+    // Método para imprimir el estado de todos los tableros individuales en un formato de 3x3.
     public void imprimirTablero() {
-        // Cada Tablero.TableroIndividual tiene 3 filas
         for (int filaGrupo = 0; filaGrupo < 3; filaGrupo++) {
-            // Para cada fila interna de los tableros
             for (int filaInterna = 0; filaInterna < 3; filaInterna++) {
                 for (int colGrupo = 0; colGrupo < 3; colGrupo++) {
                     TableroIndividual t = (TableroIndividual) tableros.get(filaGrupo * 3 + colGrupo);
@@ -44,6 +43,7 @@ public class GrupoTableros implements Tablero {
     }
 
     @Override
+    // Método para recibir una jugada en un tablero específico.
     public int recibirJugada(int plano, int fila, int columna, char simbolo) {
         TableroIndividual t = (TableroIndividual) tableros.get(plano);
         return t.recibirJugada(plano,fila, columna, simbolo);
@@ -52,6 +52,7 @@ public class GrupoTableros implements Tablero {
 
 
     @Override
+    // Método para verificar si un tablero específico está lleno.
     public boolean verificarGanador(int posicionTablero,char simbolo) {
         Tablero individual = (TableroIndividual) tableros.get(posicionTablero);
         if(individual.verificarGanador(posicionTablero,simbolo)) {
@@ -65,6 +66,7 @@ public class GrupoTableros implements Tablero {
     }
 
     @Override
+    // Método para verificar si un tablero específico ha empatado.
     public boolean verificarEmpate(int posicion) {
         Tablero individual = (TableroIndividual) tableros.get(posicion);
         if (individual.verificarEmpate(posicion)){
@@ -76,7 +78,9 @@ public class GrupoTableros implements Tablero {
     }
 
     @Override
+    // Método para rellenar un tablero específico con un símbolo dado.
     public void rellenarTablero(char simbolo, int plano) {
+
         tableros.get(plano).rellenarTablero(simbolo, plano);
     }
 
