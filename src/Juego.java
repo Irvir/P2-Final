@@ -158,9 +158,13 @@ public class Juego implements Observador {
                                 String[] partes = input.split(" ");
                                 plano = Integer.parseInt(partes[0]);
                                 posicion = Integer.parseInt(partes[1]);
-                                if (planosCompletados.contains(plano - 1)) {
-                                    System.out.println("Ese plano ya está completado. Elija otro plano.");
-                                    continue;
+                                // Mientras el plano esté completo no se puede realizar Jugada
+                                while (planosCompletados.contains(plano - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
+                                    input = in.nextLine();
+                                    partes = input.split(" ");
+                                    plano = Integer.parseInt(partes[0]);
+                                    posicion = Integer.parseInt(partes[1]);
                                 }
                                 resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
                             } else {
@@ -172,9 +176,13 @@ public class Juego implements Observador {
                                     String[] partes = input.split(" ");
                                     plano = Integer.parseInt(partes[0]);
                                     posicion = Integer.parseInt(partes[1]);
-                                    if (planosCompletados.contains(plano - 1)) {
-                                        System.out.println("Ese plano también está completado. Elija otro.");
-                                        continue;
+                                    // Mientras el plano esté completo no se puede realizar Jugada
+                                    while (planosCompletados.contains(plano - 1)) {
+                                        System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
+                                        input = in.nextLine();
+                                        partes = input.split(" ");
+                                        plano = Integer.parseInt(partes[0]);
+                                        posicion = Integer.parseInt(partes[1]);
                                     }
                                     resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
                                 } else {
@@ -269,9 +277,13 @@ public class Juego implements Observador {
                                 String[] partes = input.split(" ");
                                 plano = Integer.parseInt(partes[0]);
                                 posicion = Integer.parseInt(partes[1]);
-                                if (planosCompletados.contains(plano - 1)) {
-                                    System.out.println("Ese plano ya está completado. Elija otro plano.");
-                                    continue;
+                                // Mientras el plano esté completo no se puede realizar Jugada
+                                while (planosCompletados.contains(plano - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
+                                    input = in.nextLine();
+                                    partes = input.split(" ");
+                                    plano = Integer.parseInt(partes[0]);
+                                    posicion = Integer.parseInt(partes[1]);
                                 }
                                 resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
                             } else {
@@ -284,9 +296,13 @@ public class Juego implements Observador {
                                     String[] partes = input.split(" ");
                                     plano = Integer.parseInt(partes[0]);
                                     posicion = Integer.parseInt(partes[1]);
-                                    if (planosCompletados.contains(plano - 1)) {
-                                        System.out.println("Ese plano también está completado. Elija otro.");
-                                        continue;
+                                    // Mientras el plano esté completo no se puede realizar Jugada
+                                    while (planosCompletados.contains(plano - 1)) {
+                                        System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
+                                        input = in.nextLine();
+                                        partes = input.split(" ");
+                                        plano = Integer.parseInt(partes[0]);
+                                        posicion = Integer.parseInt(partes[1]);
                                     }
                                     resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
                                 }
@@ -376,9 +392,12 @@ public class Juego implements Observador {
                                 String[] partes = input.split(" ");
                                 plano = Integer.parseInt(partes[0]);
                                 posicion = Integer.parseInt(partes[1]);
-                                if (planosCompletados.contains(plano - 1)) {
-                                    System.out.println("Ese plano ya está completado. Elija otro plano.");
-                                    continue;
+                                while (planosCompletados.contains(plano - 1)) {
+                                    System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
+                                    input = in.nextLine();
+                                    partes = input.split(" ");
+                                    plano = Integer.parseInt(partes[0]);
+                                    posicion = Integer.parseInt(partes[1]);
                                 }
                                 resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
                             } else {
@@ -390,9 +409,12 @@ public class Juego implements Observador {
                                     String[] partes = input.split(" ");
                                     plano = Integer.parseInt(partes[0]);
                                     posicion = Integer.parseInt(partes[1]);
-                                    if (planosCompletados.contains(plano - 1)) {
-                                        System.out.println("Ese plano también está completado. Elija otro.");
-                                        continue;
+                                    while (planosCompletados.contains(plano - 1)) {
+                                        System.out.println("Ese plano ya está completado. Elija otro plano y posición (1-9 1-9):");
+                                        input = in.nextLine();
+                                        partes = input.split(" ");
+                                        plano = Integer.parseInt(partes[0]);
+                                        posicion = Integer.parseInt(partes[1]);
                                     }
                                     resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
                                 } else {
@@ -475,26 +497,38 @@ public class Juego implements Observador {
                                 posicion = random.nextInt(9)+1;
                                 System.out.println("Plano: " + plano + ", Posición: " + posicion);
 
-                                if (planosCompletados.contains(plano - 1)) {
+                                while (planosCompletados.contains(plano - 1)) {
                                     System.out.println("Ese plano ya está completado. Elija otro plano.");
-                                    continue;
+                                    plano = random.nextInt(9)+1;
+                                    posicion = random.nextInt(9)+1;
+
+                                    System.out.println("PC - Fácil escogió plano: "+plano+" posición: "+posicion);
                                 }
                                 resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
                             } else {
                                 int planoActual = (siguientePlano == 1) ? 1 : siguientePlano;
                                 if (planosCompletados.contains(planoActual - 1)) {
+                                    System.out.println("Plano: " + planoActual + ", Posición: " + posicion);
+
                                     System.out.println("Ese plano ya está completado. Se elegirá otro plano y posición (1-9 1-9) aleatorio:");
                                     plano = random.nextInt(9)+1;
                                     posicion = random.nextInt(9)+1;
-                                    if (planosCompletados.contains(plano - 1)) {
-                                        System.out.println("Ese plano también está completado. Elija otro.");
-                                        continue;
+                                    System.out.println("Plano: " + plano + ", Posición: " + posicion);
+
+                                    while (planosCompletados.contains(plano - 1)) {
+                                        System.out.println("Ese plano ya está completado. Elija otro plano.");
+                                        plano = random.nextInt(9)+1;
+                                        posicion = random.nextInt(9)+1;
+
+                                        System.out.println("PC - Fácil escogió plano: "+plano+" posición: "+posicion);
                                     }
                                     resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
                                 } else {
                                     System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Juega en el plano " + planoActual + ". Escoja la posición (1-9):");
 
                                     posicion = random.nextInt(9)+1;
+                                    System.out.println("Plano: " + planoActual + ", Posición: " + posicion);
+
                                     resultado = jugador2.hacerJugada(planoActual, posicion, tableros, jugador2.getSimbolo());
                                     plano = planoActual;
                                 }
@@ -583,9 +617,12 @@ public class Juego implements Observador {
                                 String[] partes = input.split(" ");
                                 plano = Integer.parseInt(partes[0]);
                                 posicion = Integer.parseInt(partes[1]);
-                                if (planosCompletados.contains(plano - 1)) {
+                                while (planosCompletados.contains(plano - 1)) {
                                     System.out.println("Ese plano ya está completado. Elija otro plano.");
-                                    continue;
+                                    input = in.nextLine();
+                                    partes = input.split(" ");
+                                    plano = Integer.parseInt(partes[0]);
+                                    posicion = Integer.parseInt(partes[1]);
                                 }
                                 resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
                             } else {
@@ -597,9 +634,12 @@ public class Juego implements Observador {
                                     String[] partes = input.split(" ");
                                     plano = Integer.parseInt(partes[0]);
                                     posicion = Integer.parseInt(partes[1]);
-                                    if (planosCompletados.contains(plano - 1)) {
+                                    while (planosCompletados.contains(plano - 1)) {
                                         System.out.println("Ese plano también está completado. Elija otro.");
-                                        continue;
+                                        input = in.nextLine();
+                                        partes = input.split(" ");
+                                        plano = Integer.parseInt(partes[0]);
+                                        posicion = Integer.parseInt(partes[1]);
                                     }
                                     resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
                                 } else {
@@ -682,9 +722,14 @@ public class Juego implements Observador {
                                 //Realiza un análisis y después realizar la Jugada.
                                 plano = pcDificil.hacerJugadaDificilGrupo(tableros, jugador2.getSimbolo());
                                 posicion = pcDificil.hacerJugadaDificilPlano(plano - 1, jugador2.getSimbolo(), tableros.getTableros().get(plano - 1).getTablero());
-                                if (planosCompletados.contains(plano - 1)) {
+                                System.out.println("Plano: " + plano + ", Posición: " + posicion);
+
+                                while (planosCompletados.contains(plano - 1)) {
                                     System.out.println("Ese plano ya está completado. Elija otro plano.");
-                                    continue;
+                                    plano = pcDificil.hacerJugadaDificilGrupo(tableros, jugador2.getSimbolo());
+                                    posicion = pcDificil.hacerJugadaDificilPlano(plano - 1, jugador2.getSimbolo(), tableros.getTableros().get(plano - 1).getTablero());
+
+                                    System.out.println("PC - Difícil escogió plano: "+plano+ " posición: "+ posicion);
                                 }
                                 resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
                             } else {
@@ -695,6 +740,7 @@ public class Juego implements Observador {
 
                                     plano = pcDificil.hacerJugadaDificilGrupo(tableros, jugador2.getSimbolo());
                                     posicion = pcDificil.hacerJugadaDificilPlano(plano, jugador2.getSimbolo(), tableros.getTableros().get(plano - 1).getTablero());
+                                    System.out.println("Plano: " + plano + ", Posición: " + posicion);
 
                                     if (planosCompletados.contains(plano - 1)) {
                                         System.out.println("Ese plano también está completado. Elija otro.");
@@ -705,6 +751,8 @@ public class Juego implements Observador {
                                     System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Juega en el plano " + planoActual + ". Escoja la posición (1-9):");
 
                                     posicion = pcDificil.hacerJugadaDificilPlano(planoActual, jugador2.getSimbolo(), tableros.getTableros().get(planoActual - 1).getTablero());
+                                    System.out.println("Plano: " + planoActual + ", Posición: " + posicion);
+
                                     resultado = jugador2.hacerJugada(planoActual, posicion, tableros, jugador2.getSimbolo());
                                     plano = planoActual;
                                 }
@@ -784,8 +832,6 @@ public class Juego implements Observador {
 
             case "J2":
                 if (jugador2 instanceof JugadorHumano){
-                    System.out.println("Simbolo J1"+jugador1.getSimbolo());
-                    System.out.println("Simbolo J2"+jugador2.getSimbolo());
                     while (true) {
                     if (turnoJ2) {
                         // Determinar si el siguiente plano está completado o es el primer turno
@@ -796,9 +842,12 @@ public class Juego implements Observador {
                             String[] partes = input.split(" ");
                             plano = Integer.parseInt(partes[0]);
                             posicion = Integer.parseInt(partes[1]);
-                            if (planosCompletados.contains(plano - 1)) {
+                            while (planosCompletados.contains(plano - 1)) {
                                 System.out.println("Ese plano ya está completado. Elija otro plano.");
-                                continue;
+                                input = in.nextLine();
+                                partes = input.split(" ");
+                                plano = Integer.parseInt(partes[0]);
+                                posicion = Integer.parseInt(partes[1]);
                             }
                             resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
                         } else {
@@ -810,9 +859,12 @@ public class Juego implements Observador {
                                 String[] partes = input.split(" ");
                                 plano = Integer.parseInt(partes[0]);
                                 posicion = Integer.parseInt(partes[1]);
-                                if (planosCompletados.contains(plano - 1)) {
+                                while (planosCompletados.contains(plano - 1)) {
                                     System.out.println("Ese plano también está completado. Elija otro.");
-                                    continue;
+                                    input = in.nextLine();
+                                    partes = input.split(" ");
+                                    plano = Integer.parseInt(partes[0]);
+                                    posicion = Integer.parseInt(partes[1]);
                                 }
                                 resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
                             } else {
@@ -890,9 +942,12 @@ public class Juego implements Observador {
                             String[] partes = input.split(" ");
                             plano = Integer.parseInt(partes[0]);
                             posicion = Integer.parseInt(partes[1]);
-                            if (planosCompletados.contains(plano - 1)) {
+                            while (planosCompletados.contains(plano - 1)) {
                                 System.out.println("Ese plano ya está completado. Elija otro plano.");
-                                continue;
+                                input = in.nextLine();
+                                partes = input.split(" ");
+                                plano = Integer.parseInt(partes[0]);
+                                posicion = Integer.parseInt(partes[1]);
                             }
                             resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
                         } else {
@@ -903,9 +958,12 @@ public class Juego implements Observador {
                                 String[] partes = input.split(" ");
                                 plano = Integer.parseInt(partes[0]);
                                 posicion = Integer.parseInt(partes[1]);
-                                if (planosCompletados.contains(plano - 1)) {
+                                while (planosCompletados.contains(plano - 1)) {
                                     System.out.println("Ese plano también está completado. Elija otro.");
-                                    continue;
+                                    input = in.nextLine();
+                                    partes = input.split(" ");
+                                    plano = Integer.parseInt(partes[0]);
+                                    posicion = Integer.parseInt(partes[1]);
                                 }
                                 resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
                             } else {
@@ -995,7 +1053,7 @@ public class Juego implements Observador {
                                 posicion = random.nextInt(9) + 1;
                                 System.out.println("Plano: " + plano + ", Posición: " + posicion);
 
-                                if (planosCompletados.contains(plano - 1)) {
+                                while (planosCompletados.contains(plano - 1)) {
                                     System.out.println("Ese plano ya está completado. Elija otro plano.");
                                     continue;
                                 }
@@ -1006,14 +1064,18 @@ public class Juego implements Observador {
                                     System.out.println("Ese plano ya está completado. Se elegirá otro plano y posición (1-9 1-9) aleatorio:");
                                     plano = random.nextInt(9) + 1;
                                     posicion = random.nextInt(9) + 1;
-                                    if (planosCompletados.contains(plano - 1)) {
+                                    while (planosCompletados.contains(plano - 1)) {
                                         System.out.println("Ese plano también está completado. Elija otro.");
-                                        continue;
+                                        plano = random.nextInt(9) + 1;
+                                        posicion = random.nextInt(9) + 1;
+                                        System.out.println("PC - Fácil escoigió plano: "+planoActual + " posición: "+posicion);
+
                                     }
                                     resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
                                 } else {
                                     System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Juega en el plano " + planoActual + ". Escoja la posición (1-9):");
                                     posicion = random.nextInt(9) + 1;
+                                    System.out.println("PC - Fácil escoigió plano: "+planoActual + " posición: "+posicion);
                                     resultado = jugador2.hacerJugada(planoActual, posicion, tableros, jugador2.getSimbolo());
                                     plano = planoActual;
                                 }
@@ -1025,10 +1087,10 @@ public class Juego implements Observador {
                                 int filaMeta = (plano - 1) / 3;
                                 int columnaMeta = (plano - 1) % 3;
                                 if (!planosCompletados.contains(plano - 1)) {
-
-                          planosCompletados.add(plano - 1);
-                                 planosCompletados.add(plano - 1);
-                                    planosIncompletos.remove(plano - 1);                                }
+                                    planosCompletados.add(plano - 1);
+                                    planosCompletados.add(plano - 1);
+                                    planosIncompletos.remove(plano - 1);
+                                }
                                 metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador2.getSimbolo());
                                 System.out.println("Vista General del Meta - Tablero.Tablero:");
                                 metaTablero.imprimirTablero();
@@ -1041,9 +1103,10 @@ public class Juego implements Observador {
 
                                 if (!planosCompletados.contains(plano - 1)) {
 
-                          planosCompletados.add(plano - 1);
-                                 planosCompletados.add(plano - 1);
-                                    planosIncompletos.remove(plano - 1);                                }
+                                    planosCompletados.add(plano - 1);
+                                    planosCompletados.add(plano - 1);
+                                    planosIncompletos.remove(plano - 1);
+                                }
                                System.out.println("Vista General del Meta - Tablero.Tablero:");
                                 metaTablero.imprimirTablero();
                             }
@@ -1083,7 +1146,7 @@ public class Juego implements Observador {
                             tableros.imprimirTablero();
                             siguientePlano = posicion; // Guardar la posición elegida (1-9)
                         }
-                        //J2
+                        //Turno J2
                         boolean pedirPlano = planosCompletados.contains(siguientePlano - 1);
                         if (pedirPlano) {
                             System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Escoja plano (1-9) y posición (1-9):");
@@ -1091,13 +1154,17 @@ public class Juego implements Observador {
                             String[] partes = input.split(" ");
                             plano = Integer.parseInt(partes[0]);
                             posicion = Integer.parseInt(partes[1]);
-                            if (planosCompletados.contains(plano - 1)) {
+                            System.out.println("Plano: " + plano + ", Posición: " + posicion);
+
+                            while (planosCompletados.contains(plano - 1)) {
                                 System.out.println("Ese plano ya está completado. Elija otro plano.");
-                                continue;
+                                input = in.nextLine();
+                                partes = input.split(" ");
+                                plano = Integer.parseInt(partes[0]);
+                                posicion = Integer.parseInt(partes[1]);
                             }
                             resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
                         }
-                        //Jugador 2
 
                         else {
                             int planoActual = (siguientePlano == 1) ? 1 : siguientePlano;
@@ -1107,15 +1174,23 @@ public class Juego implements Observador {
                                 String[] partes = input.split(" ");
                                 plano = Integer.parseInt(partes[0]);
                                 posicion = Integer.parseInt(partes[1]);
-                                if (planosCompletados.contains(plano - 1)) {
+                                System.out.println("Plano: " + plano + ", Posición: " + posicion);
+
+                                while (planosCompletados.contains(plano - 1)) {
                                     System.out.println("Ese plano también está completado. Elija otro.");
-                                    continue;
+                                    input = in.nextLine();
+                                    partes = input.split(" ");
+                                    plano = Integer.parseInt(partes[0]);
+                                    posicion = Integer.parseInt(partes[1]);
+                                    System.out.println("Plano: " + plano + ", Posición: " + posicion);
                                 }
                                 resultado = jugador1.hacerJugada(plano, posicion, tableros, jugador1.getSimbolo());
                             } else {
                                 System.out.println("Turno de '" + jugador1.getNombreJugador() + "'. posición (1-9) en el tablero: " + planoActual);
                                 String input = in.nextLine();
                                 posicion = Integer.parseInt(input);
+                                System.out.println("Plano: " + planoActual + ", Posición: " + posicion);
+
                                 resultado = jugador1.hacerJugada(planoActual, posicion, tableros, jugador1.getSimbolo());
                                 plano = planoActual;
                             }
@@ -1127,9 +1202,10 @@ public class Juego implements Observador {
                                 int filaMeta = (plano - 1) / 3;
                                 int columnaMeta = (plano - 1) % 3;
                                 if (!planosCompletados.contains(plano - 1)) {
-                          planosCompletados.add(plano - 1);
-                                 planosCompletados.add(plano - 1);
-                                    planosIncompletos.remove(plano - 1);                                }
+                                    planosCompletados.add(plano - 1);
+                                    planosCompletados.add(plano - 1);
+                                    planosIncompletos.remove(plano - 1);
+                                }
                                 metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador1.getSimbolo());
                                 System.out.println("Vista General del Meta - Tablero.Tablero:");
                                 metaTablero.imprimirTablero();
@@ -1194,10 +1270,14 @@ public class Juego implements Observador {
 
                                 plano = pcDificil.hacerJugadaDificilGrupo(tableros, jugador2.getSimbolo());
                                 posicion = pcDificil.hacerJugadaDificilPlano(plano - 1, jugador2.getSimbolo(), tableros.getTableros().get(plano - 1).getTablero());
+                                System.out.println("Plano: " + plano + ", Posición: " + posicion);
 
-                                if (planosCompletados.contains(plano - 1)) {
+                                while (planosCompletados.contains(plano - 1)) {
                                     System.out.println("Ese plano ya está completado. Elija otro plano.");
-                                    continue;
+                                    plano = pcDificil.hacerJugadaDificilGrupo(tableros, jugador2.getSimbolo());
+                                    posicion = pcDificil.hacerJugadaDificilPlano(plano - 1, jugador2.getSimbolo(), tableros.getTableros().get(plano - 1).getTablero());
+                                    System.out.println("Plano: " + plano + ", Posición: " + posicion);
+
                                 }
                                 resultado = jugador2.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
                             }
@@ -1211,6 +1291,8 @@ public class Juego implements Observador {
                                         if (planosCompletados.contains(plano - 1)) continue;
                                         posicion = pcDificil.hacerJugadaDificilPlano(plano - 1, jugador2.getSimbolo(), tableros.getTableros().get(plano - 1).getTablero());
                                         if (posicion == -1) continue;
+                                        System.out.println("Plano: " + plano + ", Posición: " + posicion);
+
                                         resultado = pcDificil.hacerJugada(plano, posicion, tableros, jugador2.getSimbolo());
                                         jugadaValida = true;
                                         break;
@@ -1226,6 +1308,8 @@ public class Juego implements Observador {
                                     System.out.println("Turno de '" + jugador2.getNombreJugador() + "'. Juega en el plano " + planoActual + ". Escoja la posición (1-9):");
                                     posicion = pcDificil.hacerJugadaDificilPlano(planoActual, jugador2.getSimbolo(), tableros.getTableros().get(planoActual - 1).getTablero());
                                     resultado = jugador2.hacerJugada(planoActual, posicion, tableros, jugador2.getSimbolo());
+                                    System.out.println("Plano: " + plano + ", Posición: " + posicion);
+
                                     plano = planoActual;
                                 }
                             }
@@ -1237,8 +1321,8 @@ public class Juego implements Observador {
                                 int columnaMeta = (plano - 1) % 3;
                                 if (!planosCompletados.contains(plano - 1)) {
 
-                          planosCompletados.add(plano - 1);
-                                 planosCompletados.add(plano - 1);
+                                    planosCompletados.add(plano - 1);
+                                    planosCompletados.add(plano - 1);
                                     planosIncompletos.remove(plano - 1);                                    
                                 }
                                 metaTablero.recibirJugada(0, filaMeta, columnaMeta, jugador2.getSimbolo());
@@ -1250,8 +1334,8 @@ public class Juego implements Observador {
                                 tableros.rellenarTablero('/',plano - 1);
                                 if (!planosCompletados.contains(plano - 1)) {
 
-                          planosCompletados.add(plano - 1);
-                                 planosCompletados.add(plano - 1);
+                                    planosCompletados.add(plano - 1);
+                                    planosCompletados.add(plano - 1);
                                     planosIncompletos.remove(plano - 1); 
                                 }
                                 int filaMeta = (plano - 1) / 3;
@@ -1295,8 +1379,6 @@ public class Juego implements Observador {
                             } catch (InterruptedException e) {
                                 System.out.println("Error al esperar entre jugadas: " + e.getMessage());
                             }
-
-
 
                             tableros.imprimirTablero();
                             siguientePlano = posicion; // Guardar la posición elegida (1-9)
