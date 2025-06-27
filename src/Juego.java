@@ -1023,6 +1023,7 @@ public class Juego implements Observador {
                             String input = in.nextLine();
                             String[] partes = input.split(" ");
                             plano = Integer.parseInt(partes[0]);
+
                             posicion = Integer.parseInt(partes[1]);
                             while (planosCompletados.contains(plano - 1)) {
                                 System.out.println("Ese plano ya está completado. Elija otro plano.");
