@@ -72,8 +72,7 @@ public class PCFacil implements Jugador{
         int fila = (posicion - 1) / 3;
         int columna = (posicion - 1) % 3;
          //Llamada al método de recibir jugada del tablero correspondiente.
-        tableros.recibirJugada(planoId,fila, columna,simbolo);
-        return posicion;
+        return tableros.recibirJugada(planoId, fila, columna, simbolo);
     }
 
     @Override
