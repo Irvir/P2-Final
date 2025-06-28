@@ -120,7 +120,7 @@ public class TableroIndividual implements Tablero {
         char[][] tablero = metaTablero.getTablero();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (tablero[i][j] == '-' || tablero[i][j] == '/') {
+                if (tablero[i][j] == '-') {
                     return false;
                 }
             }

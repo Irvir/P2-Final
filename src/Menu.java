@@ -20,7 +20,9 @@ public class Menu {
         Scanner in = new Scanner(System.in);
         while (true){
         System.out.println("Bienvenido al Gato de Gatos!");
-
+        System.out.println("Instrucciones:");
+        System.out.println("1- Cuando se pide un tablero y posición el formato es el siguiente: Plano(1-9) Espacio Posición");
+        System.out.println("2- Para rendirse tiene que escribir la palabra 'rendir' por lo que finalizará la partida");
         System.out.println("Ingrese su nombre de usuario:");
         nombreUsuario = in.nextLine();
         //Encuentra Jugador, si lo encuentra lo recupera (las estadísticas).
